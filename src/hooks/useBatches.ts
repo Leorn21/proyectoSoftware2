@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Batch, BatchFormData } from '../types';
 
+type StoredBatch = Omit<Batch, 'entryDate' | 'expiryDate' | 'createdAt'> & {
+  entryDate: string;
+  expiryDate: string | null;
+  createdAt: string;
+};
+
 /**
  * Trazabilidad REQ-F02:
  * Centraliza el ciclo de vida de lotes asociados a productos, incluyendo
@@ -18,8 +24,8 @@ export const useBatches = () => {
   useEffect(() => {
     const stored = localStorage.getItem('batches');
     if (stored) {
-      const parsed = JSON.parse(stored);
-      setBatches(parsed.map((b: any) => ({
+      const parsed = JSON.parse(stored) as StoredBatch[];
+      setBatches(parsed.map((b) => ({
         ...b,
         entryDate: new Date(b.entryDate),
         expiryDate: b.expiryDate ? new Date(b.expiryDate) : null,

@@ -133,6 +133,22 @@ package.json            # Dependencias del proyecto
 2. Haz clic en "Eliminar"
 3. Confirma la eliminación
 
+## ✅ Tests de Código Estático
+
+### Linter (ESLint)
+Ejecuta el linter sobre el código TypeScript/React:
+
+```bash
+npx eslint "src/**/*.{ts,tsx}"
+```
+
+### Métricas de complejidad y mantenibilidad
+Genera reporte con complejidad ciclomática (CC) e índice de mantenibilidad (MI):
+
+```bash
+npx escomplex -o escomplex-report.json src
+```
+
 ## 💾 Almacenamiento de Datos
 
 Los datos se almacenan en `localStorage` del navegador:

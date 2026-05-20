@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Product, Batch } from '../types';
+import { Product, Batch, BatchFormData } from '../types';
 import { BatchForm, BatchList } from './index';
 
 interface ProductDetailProps {
   product: Product;
   batches: Batch[];
-  onAddBatch: (data: any) => void;
-  onEditBatch: (id: string, data: any) => void;
+  onAddBatch: (data: BatchFormData) => void;
+  onEditBatch: (id: string, data: BatchFormData) => void;
   onDeleteBatch: (id: string) => void;
   onSelectBatch?: (batch: Batch) => void;
   calculateAvailable?: (batch: Batch) => number;
@@ -34,7 +34,7 @@ export const ProductDetail = ({
   const [showBatchForm, setShowBatchForm] = useState(false);
   const [editingBatch, setEditingBatch] = useState<Batch | null>(null);
 
-  const handleAddBatch = (data: any) => {
+  const handleAddBatch = (data: BatchFormData) => {
     onAddBatch(data);
     setShowBatchForm(false);
   };
@@ -44,7 +44,7 @@ export const ProductDetail = ({
     setShowBatchForm(true);
   };
 
-  const handleSaveEditBatch = (data: any) => {
+  const handleSaveEditBatch = (data: BatchFormData) => {
     if (editingBatch) {
       onEditBatch(editingBatch.id, data);
       setEditingBatch(null);

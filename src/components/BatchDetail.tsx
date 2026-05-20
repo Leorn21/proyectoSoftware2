@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Product, Batch, StockMovement } from '../types';
+import { Product, Batch, StockMovement, StockMovementFormData } from '../types';
 import { StockMovementForm, StockMovementList } from './index';
 
 interface BatchDetailProps {
   product: Product;
   batch: Batch;
   movements: StockMovement[];
-  onAddMovement: (data: any) => void;
+  onAddMovement: (data: StockMovementFormData) => void;
   onDeleteMovement: (id: string) => void;
   onBack: () => void;
 }
@@ -30,7 +30,7 @@ export const BatchDetail = ({
 }: BatchDetailProps) => {
   const [showMovementForm, setShowMovementForm] = useState(false);
 
-  const handleAddMovement = (data: any) => {
+  const handleAddMovement = (data: StockMovementFormData) => {
     onAddMovement(data);
     setShowMovementForm(false);
   };

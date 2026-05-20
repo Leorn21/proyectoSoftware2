@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Product, ProductFormData } from '../types';
 
+type StoredProduct = Omit<Product, 'createdAt'> & {
+  createdAt: string;
+};
+
 /**
  * Trazabilidad REQ-F01:
  * Centraliza las operaciones CRUD de productos requeridas por la propuesta:
@@ -18,8 +22,8 @@ export const useProducts = () => {
   useEffect(() => {
     const stored = localStorage.getItem('products');
     if (stored) {
-      const parsed = JSON.parse(stored);
-      setProducts(parsed.map((p: any) => ({
+      const parsed = JSON.parse(stored) as StoredProduct[];
+      setProducts(parsed.map((p) => ({
         ...p,
         createdAt: new Date(p.createdAt)
       })));

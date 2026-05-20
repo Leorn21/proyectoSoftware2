@@ -1,5 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { StockMovement, StockMovementFormData } from '../types';
+
+type StoredStockMovement = Omit<StockMovement, 'createdAt'> & {
+  createdAt: string;
+};
 import { useBatches } from './useBatches';
 
 /**
@@ -20,8 +24,8 @@ export const useStockMovements = () => {
   useEffect(() => {
     const stored = localStorage.getItem('stockMovements');
     if (stored) {
-      const parsed = JSON.parse(stored);
-      setMovements(parsed.map((m: any) => ({
+      const parsed = JSON.parse(stored) as StoredStockMovement[];
+      setMovements(parsed.map((m) => ({
         ...m,
         createdAt: new Date(m.createdAt)
       })));

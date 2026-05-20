@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProductList = void 0;
+var jsx_runtime_1 = require("react/jsx-runtime");
+/**
+ * Componente lista de productos
+ * Cumple con REQ-F01: Consulta de productos
+ * Cumple con REQ-F02: Acceso a lotes del producto
+ */
+var ProductList = function (_a) {
+    var products = _a.products, onEdit = _a.onEdit, onDelete = _a.onDelete, onSelectProduct = _a.onSelectProduct, searchQuery = _a.searchQuery;
+    if (products.length === 0) {
+        return ((0, jsx_runtime_1.jsx)("div", { className: "bg-white rounded-lg shadow-md p-8 text-center", children: (0, jsx_runtime_1.jsx)("p", { className: "text-gray-500 text-lg", children: searchQuery ? 'No se encontraron productos.' : 'No hay productos registrados. ¡Crea uno nuevo!' }) }));
+    }
+    return ((0, jsx_runtime_1.jsxs)("div", { className: "bg-white rounded-lg shadow-md overflow-hidden", children: [(0, jsx_runtime_1.jsx)("div", { className: "overflow-x-auto", children: (0, jsx_runtime_1.jsxs)("table", { className: "w-full", children: [(0, jsx_runtime_1.jsx)("thead", { children: (0, jsx_runtime_1.jsxs)("tr", { className: "bg-gray-100 border-b", children: [(0, jsx_runtime_1.jsx)("th", { className: "px-6 py-3 text-left text-sm font-semibold text-gray-700", children: "C\u00F3digo" }), (0, jsx_runtime_1.jsx)("th", { className: "px-6 py-3 text-left text-sm font-semibold text-gray-700", children: "Nombre" }), (0, jsx_runtime_1.jsx)("th", { className: "px-6 py-3 text-left text-sm font-semibold text-gray-700", children: "Descripci\u00F3n" }), (0, jsx_runtime_1.jsx)("th", { className: "px-6 py-3 text-left text-sm font-semibold text-gray-700", children: "Categor\u00EDa" }), (0, jsx_runtime_1.jsx)("th", { className: "px-6 py-3 text-left text-sm font-semibold text-gray-700", children: "Unidad" }), (0, jsx_runtime_1.jsx)("th", { className: "px-6 py-3 text-left text-sm font-semibold text-gray-700", children: "Acciones" })] }) }), (0, jsx_runtime_1.jsx)("tbody", { children: products.map(function (product) { return ((0, jsx_runtime_1.jsxs)("tr", { className: "border-b hover:bg-gray-50 transition-colors", children: [(0, jsx_runtime_1.jsx)("td", { className: "px-6 py-4 text-sm font-medium text-gray-900", children: product.code }), (0, jsx_runtime_1.jsx)("td", { className: "px-6 py-4 text-sm text-gray-700", children: product.name }), (0, jsx_runtime_1.jsx)("td", { className: "px-6 py-4 text-sm text-gray-600 max-w-xs truncate", children: product.description }), (0, jsx_runtime_1.jsx)("td", { className: "px-6 py-4 text-sm", children: (0, jsx_runtime_1.jsx)("span", { className: "inline-block bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-xs font-medium", children: product.category }) }), (0, jsx_runtime_1.jsx)("td", { className: "px-6 py-4 text-sm text-gray-700", children: product.unit }), (0, jsx_runtime_1.jsx)("td", { className: "px-6 py-4 text-sm", children: (0, jsx_runtime_1.jsxs)("div", { className: "flex gap-2", children: [onSelectProduct && ((0, jsx_runtime_1.jsx)("button", { onClick: function () { return onSelectProduct(product); }, className: "px-3 py-1 bg-purple-500 text-white text-xs rounded hover:bg-purple-600 transition-colors font-medium", title: "Ver lotes del producto", children: "Lotes" })), (0, jsx_runtime_1.jsx)("button", { onClick: function () { return onEdit(product); }, className: "px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-colors font-medium", children: "Editar" }), (0, jsx_runtime_1.jsx)("button", { onClick: function () {
+                                                        if (window.confirm("\u00BFEliminar producto \"".concat(product.name, "\"?"))) {
+                                                            onDelete(product.id);
+                                                        }
+                                                    }, className: "px-3 py-1 bg-red-500 text-white text-xs rounded hover:bg-red-600 transition-colors font-medium", children: "Eliminar" })] }) })] }, product.id)); }) })] }) }), (0, jsx_runtime_1.jsxs)("div", { className: "px-6 py-3 bg-gray-50 border-t text-sm text-gray-600", children: ["Total: ", (0, jsx_runtime_1.jsx)("span", { className: "font-semibold", children: products.length }), " producto(s)"] })] }));
+};
+exports.ProductList = ProductList;
