@@ -12,8 +12,13 @@ interface BatchDetailProps {
 }
 
 /**
- * Componente de detalle de lote con movimientos de stock
- * REQ-F03: Muestra movimientos de stock y permite registrar nuevos
+ * Trazabilidad REQ-F03:
+ * Muestra el historial de movimientos de un lote y habilita el registro de
+ * nuevos ingresos o egresos.
+ *
+ * Trazabilidad REQ-F04:
+ * Entrega el stock disponible al formulario para validar que un egreso no
+ * supere la cantidad disponible.
  */
 export const BatchDetail = ({
   product,
@@ -34,7 +39,7 @@ export const BatchDetail = ({
     setShowMovementForm(false);
   };
 
-  // Calcular cantidad disponible basada en movimientos
+  // REQ-F03: Reconstruye el saldo del lote desde la cantidad inicial y sus movimientos.
   const totalMovement = movements.reduce((sum, m) => {
     return m.type === 'ingreso' ? sum + m.quantity : sum - m.quantity;
   }, 0);

@@ -6,15 +6,10 @@ import { ProductForm, ProductList, SearchBar, ProductDetail, BatchDetail } from 
 import { Product, ProductFormData, BatchFormData, Batch, StockMovementFormData } from './types';
 
 /**
- * Componente principal de la aplicación
- * Cumple con REQ-F01: Sistema de gestión de productos
- * Cumple con REQ-F02: Sistema de gestión de lotes
- * Cumple con REQ-F03: Sistema de movimientos de stock
- * - Registrar productos y lotes
- * - Editar productos y lotes
- * - Consultar productos y lotes
- * - Eliminar productos y lotes
- * - Registrar movimientos de stock (ingresos y egresos)
+ * Trazabilidad REQ-NF02:
+ * Orquestador principal de los casos de uso definidos en la propuesta.
+ * Conecta productos (REQ-F01), lotes (REQ-F02), movimientos (REQ-F03/REQ-F04)
+ * y consulta de inventario con detalle de lotes (REQ-F05).
  */
 function App() {
   const { products, addProduct, updateProduct, deleteProduct, searchProducts, loading: productsLoading } = useProducts();
@@ -29,7 +24,7 @@ function App() {
 
   const loading = productsLoading || batchesLoading || movementsLoading;
 
-  // Calcular cantidad disponible para un lote basado en movimientos
+  // REQ-F03 / REQ-F05: El stock visible se deriva de la cantidad inicial mas el historial de movimientos.
   const getAvailableQuantity = (batch: Batch): number => {
     const batchMovements = getMovementsByBatch(batch.id);
     const totalMovement = batchMovements.reduce((sum, m) => {
@@ -38,7 +33,7 @@ function App() {
     return batch.initialQuantity + totalMovement;
   };
 
-  // Determinar qué productos mostrar (búsqueda o todos)
+  // REQ-F05: Permite consultar el inventario completo o filtrado por busqueda.
   const displayedProducts = useMemo(() => {
     if (searchQuery.trim()) {
       return searchProducts(searchQuery);
@@ -47,9 +42,11 @@ function App() {
   }, [products, searchQuery, searchProducts]);
 
   const selectedProduct = selectedProductId ? products.find(p => p.id === selectedProductId) : null;
+  // REQ-F05: Detalle de lotes asociados al producto seleccionado.
   const selectedProductBatches = selectedProductId ? getBatchesByProduct(selectedProductId) : [];
 
   const handleFormSubmit = (data: ProductFormData) => {
+    // REQ-F01: Unifica alta y edicion de productos desde el formulario.
     if (editingProduct) {
       updateProduct(editingProduct.id, data);
     } else {
@@ -77,6 +74,7 @@ function App() {
   };
 
   const handleAddBatch = (data: BatchFormData) => {
+    // REQ-F02: Todo lote nuevo queda asociado al producto en contexto.
     if (selectedProductId) {
       addBatch(selectedProductId, data);
     }
@@ -99,6 +97,7 @@ function App() {
   };
 
   const handleAddMovement = (data: StockMovementFormData) => {
+    // REQ-F03 / REQ-F04: El formulario valida el egreso y este handler registra el movimiento.
     if (selectedBatchId) {
       addMovement(selectedBatchId, data);
     }

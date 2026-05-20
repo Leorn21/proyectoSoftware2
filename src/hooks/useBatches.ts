@@ -2,15 +2,19 @@ import { useState, useEffect } from 'react';
 import { Batch, BatchFormData } from '../types';
 
 /**
- * Hook personalizado para gestionar lotes
- * REQ-F02: Registro de lotes asociados a un producto
- * Utiliza localStorage para persistencia local
+ * Trazabilidad REQ-F02:
+ * Centraliza el ciclo de vida de lotes asociados a productos, incluyendo
+ * numero de lote, cantidades, fecha de ingreso y vencimiento opcional.
+ *
+ * Trazabilidad REQ-F05:
+ * Expone consultas por producto para mostrar el detalle de lotes dentro del
+ * inventario.
  */
 export const useBatches = () => {
   const [batches, setBatches] = useState<Batch[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Cargar lotes del localStorage
+  // REQ-NF01: Recupera lotes guardados localmente para ejecutar la app sin backend.
   useEffect(() => {
     const stored = localStorage.getItem('batches');
     if (stored) {
@@ -25,14 +29,14 @@ export const useBatches = () => {
     setLoading(false);
   }, []);
 
-  // Guardar en localStorage cuando cambian los lotes
+  // REQ-NF01: Mantiene persistencia local de lotes para pruebas de usuario.
   useEffect(() => {
     if (!loading) {
       localStorage.setItem('batches', JSON.stringify(batches));
     }
   }, [batches, loading]);
 
-  // Agregar nuevo lote
+  // REQ-F02: Registra un lote vinculado a un producto con cantidad inicial y vencimiento opcional.
   const addBatch = (productId: string, data: BatchFormData): Batch => {
     const newBatch: Batch = {
       id: Date.now().toString(),
@@ -48,7 +52,7 @@ export const useBatches = () => {
     return newBatch;
   };
 
-  // Actualizar lote
+  // REQ-F02: Edita los datos de identificacion y vencimiento del lote.
   const updateBatch = (id: string, data: BatchFormData): void => {
     setBatches(batches.map(b =>
       b.id === id
@@ -61,22 +65,22 @@ export const useBatches = () => {
     ));
   };
 
-  // Eliminar lote
+  // REQ-F02: Elimina un lote asociado cuando deja de formar parte del inventario.
   const deleteBatch = (id: string): void => {
     setBatches(batches.filter(b => b.id !== id));
   };
 
-  // Obtener lotes de un producto
+  // REQ-F05: Obtiene el detalle de lotes asociado a un producto listado.
   const getBatchesByProduct = (productId: string): Batch[] => {
     return batches.filter(b => b.productId === productId);
   };
 
-  // Obtener un lote específico
+  // REQ-F02: Consulta puntual de un lote para visualizar o actualizar su detalle.
   const getBatch = (id: string): Batch | undefined => {
     return batches.find(b => b.id === id);
   };
 
-  // Actualizar cantidad disponible del lote (para movimientos de stock)
+  // REQ-F03: Sincroniza el saldo disponible luego de registrar movimientos de stock.
   const updateAvailableQuantity = (batchId: string, newQuantity: number): void => {
     setBatches(batches.map(b =>
       b.id === batchId ? { ...b, availableQuantity: newQuantity } : b

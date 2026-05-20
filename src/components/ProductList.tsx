@@ -9,9 +9,12 @@ interface ProductListProps {
 }
 
 /**
- * Componente lista de productos
- * Cumple con REQ-F01: Consulta de productos
- * Cumple con REQ-F02: Acceso a lotes del producto
+ * Trazabilidad REQ-F01:
+ * Presenta productos consultables y expone acciones de editar/eliminar.
+ *
+ * Trazabilidad REQ-F05:
+ * Es la entrada visual al inventario; desde cada producto se accede al detalle
+ * de lotes que explica el stock disponible.
  */
 export const ProductList = ({
   products,

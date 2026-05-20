@@ -10,9 +10,11 @@ interface BatchListProps {
 }
 
 /**
- * Componente lista de lotes
- * REQ-F02: Consulta de lotes de un producto
- * REQ-F03: Permite navegar a detalle del lote con movimientos
+ * Trazabilidad REQ-F02:
+ * Lista los lotes asociados a un producto con cantidades, ingreso y vencimiento.
+ *
+ * Trazabilidad REQ-F05:
+ * Permite consultar el detalle de lotes que compone el stock total del producto.
  */
 export const BatchList = ({
   batches,
@@ -46,6 +48,7 @@ export const BatchList = ({
           </thead>
           <tbody>
             {batches.map((batch) => {
+              // REQ-F03 / REQ-F05: Usa el saldo recalculado por movimientos cuando esta disponible.
               const available = calculateAvailable ? calculateAvailable(batch) : batch.availableQuantity;
               return (
                 <tr key={batch.id} className="border-b hover:bg-gray-50 transition-colors">

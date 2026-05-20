@@ -14,9 +14,12 @@ interface MovementFormErrors {
 }
 
 /**
- * Componente formulario para movimientos de stock
- * REQ-F03: Registro de movimientos (ingresos y egresos)
- * REQ-F04: Validación de egresos
+ * Trazabilidad REQ-F03:
+ * Captura movimientos de stock por lote, diferenciando ingresos y egresos.
+ *
+ * Trazabilidad REQ-F04:
+ * Es el punto de control que impide registrar egresos superiores al stock
+ * disponible informado por la vista de detalle de lote.
  */
 export const StockMovementForm = ({
   batchNumber,
@@ -32,6 +35,7 @@ export const StockMovementForm = ({
 
   const [errors, setErrors] = useState<MovementFormErrors>({});
 
+  // REQ-F03 / REQ-F04: Valida tipo, cantidad positiva y limite de egreso disponible.
   const validateForm = (): boolean => {
     const newErrors: MovementFormErrors = {};
 

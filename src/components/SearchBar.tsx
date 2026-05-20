@@ -6,8 +6,8 @@ interface SearchBarProps {
 }
 
 /**
- * Componente barra de búsqueda
- * Cumple con REQ-F01: Consulta de productos
+ * Trazabilidad REQ-F05:
+ * Filtro de consulta del inventario por codigo, nombre o categoria del producto.
  */
 export const SearchBar = ({
   onSearch,

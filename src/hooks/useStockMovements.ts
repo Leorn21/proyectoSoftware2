@@ -3,16 +3,20 @@ import { StockMovement, StockMovementFormData } from '../types';
 import { useBatches } from './useBatches';
 
 /**
- * Hook personalizado para gestionar movimientos de stock
- * REQ-F03: Registro de movimientos de stock (ingresos y egresos)
- * Actualiza automáticamente la cantidad disponible del lote
+ * Trazabilidad REQ-F03:
+ * Gestiona movimientos de stock por lote, diferenciando ingresos y egresos, y
+ * recalcula el saldo disponible despues de cada cambio.
+ *
+ * Trazabilidad REQ-F04:
+ * La validacion de egresos mayores al stock se aplica en StockMovementForm antes
+ * de invocar este hook; este modulo conserva la actualizacion del saldo.
  */
 export const useStockMovements = () => {
   const [movements, setMovements] = useState<StockMovement[]>([]);
   const [loading, setLoading] = useState(true);
   const { getBatch, updateAvailableQuantity } = useBatches();
 
-  // Cargar movimientos del localStorage
+  // REQ-NF01: Recupera movimientos locales para ejecutar y probar sin infraestructura externa.
   useEffect(() => {
     const stored = localStorage.getItem('stockMovements');
     if (stored) {
@@ -25,14 +29,14 @@ export const useStockMovements = () => {
     setLoading(false);
   }, []);
 
-  // Guardar en localStorage cuando cambian los movimientos
+  // REQ-NF01: Persiste el historial local de movimientos entre recargas.
   useEffect(() => {
     if (!loading) {
       localStorage.setItem('stockMovements', JSON.stringify(movements));
     }
   }, [movements, loading]);
 
-  // Calcular cantidad disponible después de todos los movimientos
+  // REQ-F03 / REQ-F05: Calcula el saldo que se muestra en consultas de lote e inventario.
   const calculateAvailableQuantity = useCallback((batchId: string): number => {
     const batch = getBatch(batchId);
     if (!batch) return 0;
@@ -46,7 +50,7 @@ export const useStockMovements = () => {
     return batch.initialQuantity + totalMovement;
   }, [movements, getBatch]);
 
-  // Agregar movimiento de stock
+  // REQ-F03: Registra ingreso o egreso y actualiza automaticamente la cantidad disponible del lote.
   const addMovement = (batchId: string, data: StockMovementFormData): StockMovement => {
     const newMovement: StockMovement = {
       id: Date.now().toString(),
@@ -60,7 +64,7 @@ export const useStockMovements = () => {
     const updatedMovements = [...movements, newMovement];
     setMovements(updatedMovements);
 
-    // Calcular cantidad disponible con los movimientos actualizados
+    // REQ-F03: Recalculo inmediato para que el lote refleje el movimiento recien registrado.
     const batch = getBatch(batchId);
     if (batch) {
       const totalMovement = updatedMovements
@@ -75,12 +79,12 @@ export const useStockMovements = () => {
     return newMovement;
   };
 
-  // Eliminar movimiento
+  // REQ-F03: Al eliminar un movimiento se recompone el saldo para mantener trazabilidad historica.
   const deleteMovement = (id: string, batchId: string): void => {
     const updatedMovements = movements.filter(m => m.id !== id);
     setMovements(updatedMovements);
 
-    // Recalcular cantidad disponible del lote
+    // REQ-F03: Recalcula el saldo con el historial restante del lote.
     const batch = getBatch(batchId);
     if (batch) {
       const totalMovement = updatedMovements
@@ -93,7 +97,7 @@ export const useStockMovements = () => {
     }
   };
 
-  // Obtener movimientos de un lote
+  // REQ-F03: Consulta del historial de movimientos asociado a un lote.
   const getMovementsByBatch = (batchId: string): StockMovement[] => {
     return movements.filter(m => m.batchId === batchId);
   };

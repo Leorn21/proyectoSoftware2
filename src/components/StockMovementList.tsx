@@ -7,8 +7,9 @@ interface StockMovementListProps {
 }
 
 /**
- * Componente lista de movimientos de stock
- * REQ-F03: Consulta de movimientos de stock
+ * Trazabilidad REQ-F03:
+ * Presenta el historial de ingresos y egresos de un lote para explicar los
+ * cambios de cantidad disponible.
  */
 export const StockMovementList = ({
   movements,

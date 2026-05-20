@@ -16,8 +16,9 @@ interface BatchFormErrors {
 }
 
 /**
- * Componente formulario para lotes
- * REQ-F02: Registro y edición de lotes
+ * Trazabilidad REQ-F02:
+ * Captura los datos necesarios para registrar o editar lotes asociados a un
+ * producto: numero de lote, cantidad inicial y fecha de vencimiento opcional.
  */
 export const BatchForm = ({
   productName,
@@ -36,6 +37,7 @@ export const BatchForm = ({
 
   const [errors, setErrors] = useState<BatchFormErrors>({});
 
+  // REQ-F02: Garantiza que cada lote tenga identificacion y cantidad inicial valida.
   const validateForm = (): boolean => {
     const newErrors: BatchFormErrors = {};
 

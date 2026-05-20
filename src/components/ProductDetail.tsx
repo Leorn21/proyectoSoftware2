@@ -14,9 +14,12 @@ interface ProductDetailProps {
 }
 
 /**
- * Componente de detalle de producto con gestión de lotes
- * REQ-F02: Muestra lotes asociados y permite registrar nuevos
- * REQ-F03: Permite navegar a detalle de lote con movimientos de stock
+ * Trazabilidad REQ-F02:
+ * Muestra y administra los lotes asociados al producto seleccionado.
+ *
+ * Trazabilidad REQ-F05:
+ * Consolida el stock total disponible del producto a partir del detalle de sus
+ * lotes, cumpliendo la consulta de inventario definida en la propuesta.
  */
 export const ProductDetail = ({
   product,
@@ -60,6 +63,7 @@ export const ProductDetail = ({
     }
   };
 
+  // REQ-F05: Suma el disponible de cada lote para informar stock total por producto.
   const totalStock = batches.reduce((sum, b) => {
     const available = calculateAvailable ? calculateAvailable(b) : b.availableQuantity;
     return sum + available;

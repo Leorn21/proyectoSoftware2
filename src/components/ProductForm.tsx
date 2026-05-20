@@ -9,8 +9,9 @@ interface ProductFormProps {
 }
 
 /**
- * Componente formulario para productos
- * Cumple con REQ-F01: Registro y edición de productos
+ * Trazabilidad REQ-F01:
+ * Captura y valida los datos basicos exigidos para registrar o editar productos:
+ * codigo, nombre, descripcion, categoria y unidad de medida.
  */
 export const ProductForm = ({
   onSubmit,
@@ -30,6 +31,7 @@ export const ProductForm = ({
 
   const [errors, setErrors] = useState<Partial<ProductFormData>>({});
 
+  // REQ-F01: Evita productos incompletos antes de enviarlos al hook de persistencia.
   const validateForm = (): boolean => {
     const newErrors: Partial<ProductFormData> = {};
 
