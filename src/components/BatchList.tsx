@@ -1,4 +1,7 @@
 import { Batch } from '../types';
+import { ConfirmDialog } from './ConfirmDialog';
+import { Button } from './ui/button';
+import { Card, CardContent } from './ui/card';
 
 interface BatchListProps {
   batches: Batch[];
@@ -26,24 +29,26 @@ export const BatchList = ({
 }: BatchListProps) => {
   if (batches.length === 0) {
     return (
-      <div className="bg-gray-50 rounded-lg p-6 text-center border border-dashed border-gray-300">
-        <p className="text-gray-500">No hay lotes registrados para este producto.</p>
-      </div>
+      <Card className="border-dashed border-slate-700/80 bg-slate-950/50">
+        <CardContent className="p-8 text-center">
+          <p className="text-slate-400">No hay lotes registrados para este producto.</p>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden">
+    <Card className="overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-gray-100 border-b">
-              <th className="px-4 py-3 text-left font-semibold text-gray-700">Número de Lote</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-700">Cantidad Inicial</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-700">Disponible</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-700">Ingreso</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-700">Vencimiento</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-700">Acciones</th>
+            <tr className="border-b border-slate-800 bg-slate-900/80">
+              <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Número de Lote</th>
+              <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Cantidad Inicial</th>
+              <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Disponible</th>
+              <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Ingreso</th>
+              <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Vencimiento</th>
+              <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -51,66 +56,68 @@ export const BatchList = ({
               // REQ-F03 / REQ-F05: Usa el saldo recalculado por movimientos cuando esta disponible.
               const available = calculateAvailable ? calculateAvailable(batch) : batch.availableQuantity;
               return (
-                <tr key={batch.id} className="border-b hover:bg-gray-50 transition-colors">
-                  <td className="px-4 py-3 font-medium text-gray-900">{batch.batchNumber}</td>
-                  <td className="px-4 py-3 text-gray-700">
+                <tr key={batch.id} className="border-b border-slate-900 transition-colors hover:bg-slate-900/60">
+                  <td className="px-4 py-4 font-medium text-slate-100">{batch.batchNumber}</td>
+                  <td className="px-4 py-4 text-slate-300">
                     {batch.initialQuantity} {productUnit}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-4">
                     <span
-                      className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
+                      className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${
                         available > 0
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-red-100 text-red-800'
+                          ? 'bg-emerald-500/15 text-emerald-300'
+                          : 'bg-rose-500/15 text-rose-300'
                       }`}
                     >
                       {available} {productUnit}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-gray-700 text-xs">
+                  <td className="px-4 py-4 text-xs text-slate-400">
                     {batch.entryDate.toLocaleDateString('es-ES')}
                   </td>
-                  <td className="px-4 py-3 text-gray-700 text-xs">
+                  <td className="px-4 py-4 text-xs text-slate-300">
                     {batch.expiryDate ? (
                       <span
                         className={
                           new Date(batch.expiryDate) < new Date()
-                            ? 'text-red-600 font-semibold'
-                            : ''
+                            ? 'font-semibold text-rose-400'
+                            : 'text-slate-300'
                         }
                       >
                         {batch.expiryDate.toLocaleDateString('es-ES')}
                       </span>
                     ) : (
-                      <span className="text-gray-400">-</span>
+                      <span className="text-slate-500">-</span>
                     )}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-4">
                     <div className="flex gap-2">
                       {onView && (
-                        <button
+                        <Button
                           onClick={() => onView(batch)}
-                          className="px-2 py-1 bg-purple-500 text-white text-xs rounded hover:bg-purple-600 transition-colors"
+                          variant="secondary"
+                          size="sm"
                         >
                           Movimientos
-                        </button>
+                        </Button>
                       )}
-                      <button
+                      <Button
                         onClick={() => onEdit(batch)}
-                        className="px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-colors"
+                        variant="outline"
+                        size="sm"
                       >
                         Editar
-                      </button>
-                      <button
-                        onClick={() => {
-                          if (window.confirm(`¿Eliminar lote "${batch.batchNumber}"?`)) {
-                            onDelete(batch.id);
-                          }
-                        }}
-                        className="px-2 py-1 bg-red-500 text-white text-xs rounded hover:bg-red-600 transition-colors"
-                      >
-                        Eliminar
-                      </button>
+                      </Button>
+                      <ConfirmDialog
+                        title={`Eliminar lote "${batch.batchNumber}"`}
+                        description="El lote y su información dejarán de estar disponibles en este producto."
+                        onConfirm={() => onDelete(batch.id)}
+                        trigger={
+                          <Button variant="destructive" size="sm">
+                            Eliminar
+                          </Button>
+                        }
+                      />
                     </div>
                   </td>
                 </tr>
@@ -119,6 +126,6 @@ export const BatchList = ({
           </tbody>
         </table>
       </div>
-    </div>
+    </Card>
   );
 };

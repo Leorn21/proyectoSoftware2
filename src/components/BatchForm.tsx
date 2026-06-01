@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BatchFormData } from '../types';
+import { Button } from './ui/button';
 
 interface BatchFormProps {
   productName: string;
@@ -27,6 +28,7 @@ export const BatchForm = ({
   initialData,
   isEditing = false
 }: BatchFormProps) => {
+  const baseInputClass = 'w-full rounded-2xl border border-slate-700 bg-slate-900/90 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-400/70';
   const [formData, setFormData] = useState<BatchFormData>(
     initialData || {
       batchNumber: '',
@@ -74,15 +76,19 @@ export const BatchForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
-      <h3 className="text-xl font-bold mb-4 text-gray-800">
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div>
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.3em] text-sky-300">Lote</p>
+        <h3 className="text-xl font-bold text-slate-50">
         {isEditing ? 'Editar Lote' : 'Nuevo Lote'} - {productName}
-      </h3>
+        </h3>
+        <p className="mt-2 text-sm text-slate-400">Definí identificación, cantidad inicial y vencimiento para mantener trazabilidad clara.</p>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {/* Número de Lote */}
         <div>
-          <label htmlFor="batchNumber" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="batchNumber" className="mb-2 block text-sm font-medium text-slate-300">
             Número de Lote
           </label>
           <input
@@ -91,17 +97,17 @@ export const BatchForm = ({
             name="batchNumber"
             value={formData.batchNumber}
             onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.batchNumber ? 'border-red-500' : 'border-gray-300'
+            className={`${baseInputClass} ${
+              errors.batchNumber ? 'border-rose-500 focus:ring-rose-400/60' : ''
             }`}
             placeholder="Ej: LOTE-2024-001"
           />
-          {errors.batchNumber && <p className="text-red-500 text-sm mt-1">{errors.batchNumber}</p>}
+          {errors.batchNumber && <p className="mt-2 text-sm text-rose-400">{errors.batchNumber}</p>}
         </div>
 
         {/* Cantidad Inicial */}
         <div>
-          <label htmlFor="initialQuantity" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="initialQuantity" className="mb-2 block text-sm font-medium text-slate-300">
             Cantidad Inicial
           </label>
           <input
@@ -111,17 +117,17 @@ export const BatchForm = ({
             value={formData.initialQuantity || ''}
             onChange={handleChange}
             min="1"
-            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.initialQuantity ? 'border-red-500' : 'border-gray-300'
+            className={`${baseInputClass} ${
+              errors.initialQuantity ? 'border-rose-500 focus:ring-rose-400/60' : ''
             }`}
             placeholder="Cantidad"
           />
-          {errors.initialQuantity && <p className="text-red-500 text-sm mt-1">{errors.initialQuantity}</p>}
+          {errors.initialQuantity && <p className="mt-2 text-sm text-rose-400">{errors.initialQuantity}</p>}
         </div>
 
         {/* Fecha de Vencimiento */}
         <div className="md:col-span-2">
-          <label htmlFor="expiryDate" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="expiryDate" className="mb-2 block text-sm font-medium text-slate-300">
             Fecha de Vencimiento (opcional)
           </label>
           <input
@@ -130,26 +136,25 @@ export const BatchForm = ({
             name="expiryDate"
             value={formData.expiryDate || ''}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={baseInputClass}
           />
         </div>
       </div>
 
       {/* Botones */}
-      <div className="flex gap-4">
-        <button
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <Button
           type="submit"
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
         >
           {isEditing ? 'Guardar Cambios' : 'Registrar Lote'}
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
           onClick={onCancel}
-          className="px-6 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors font-medium"
+          variant="secondary"
         >
           Cancelar
-        </button>
+        </Button>
       </div>
     </form>
   );

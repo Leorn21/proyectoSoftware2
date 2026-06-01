@@ -79,29 +79,30 @@ describe('StockMovementList', () => {
   test('REQ-F03 muestra ingresos, egresos, razón faltante y confirma eliminación', async () => {
     const user = userEvent.setup();
     const onDelete = vi.fn();
-    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true);
 
     render(<StockMovementList movements={movements} onDelete={onDelete} productUnit="piezas" />);
 
-    expect(screen.getByText('+ Ingreso')).toHaveClass('bg-green-100');
-    expect(screen.getByText('- Egreso')).toHaveClass('bg-red-100');
+    expect(screen.getByText('+ Ingreso')).toHaveClass('bg-emerald-500/15');
+    expect(screen.getByText('- Egreso')).toHaveClass('bg-rose-500/15');
     expect(screen.getByText('Reposicion')).toBeInTheDocument();
     expect(screen.getByText('-')).toBeInTheDocument();
 
     await user.click(within(screen.getByRole('row', { name: /Reposicion/i })).getByRole('button', { name: /Eliminar/i }));
+    const dialog = screen.getByRole('alertdialog');
+    expect(dialog).toBeInTheDocument();
+    await user.click(within(dialog).getByRole('button', { name: /^Eliminar$/i }));
 
-    expect(confirm).toHaveBeenCalledWith('¿Eliminar este movimiento?');
     expect(onDelete).toHaveBeenCalledWith('mov-1');
   });
 
   test('REQ-F03 cancela eliminación de movimiento', async () => {
     const user = userEvent.setup();
     const onDelete = vi.fn();
-    vi.spyOn(window, 'confirm').mockReturnValue(false);
 
     render(<StockMovementList movements={[movements[0]]} onDelete={onDelete} productUnit="piezas" />);
 
     await user.click(screen.getByRole('button', { name: /Eliminar/i }));
+    await user.click(within(screen.getByRole('alertdialog')).getByRole('button', { name: /^Cancelar$/i }));
 
     expect(onDelete).not.toHaveBeenCalled();
   });
@@ -117,15 +118,15 @@ describe('BatchList', () => {
   test('REQ-F02 muestra lote sin vencimiento, sin botón de movimientos cuando no hay callback y cancela eliminación', async () => {
     const user = userEvent.setup();
     const onDelete = vi.fn();
-    vi.spyOn(window, 'confirm').mockReturnValue(false);
 
     render(<BatchList batches={[baseBatch]} onEdit={vi.fn()} onDelete={onDelete} productUnit="piezas" />);
 
     const row = screen.getByRole('row', { name: /LOTE-001/i });
-    expect(within(row).getByText('-')).toHaveClass('text-gray-400');
+    expect(within(row).getByText('-')).toHaveClass('text-slate-500');
     expect(within(row).queryByRole('button', { name: /Movimientos/i })).not.toBeInTheDocument();
 
     await user.click(within(row).getByRole('button', { name: /Eliminar/i }));
+    await user.click(within(screen.getByRole('alertdialog')).getByRole('button', { name: /^Cancelar$/i }));
 
     expect(onDelete).not.toHaveBeenCalled();
   });
@@ -135,7 +136,6 @@ describe('BatchList', () => {
     const onEdit = vi.fn();
     const onDelete = vi.fn();
     const onView = vi.fn();
-    vi.spyOn(window, 'confirm').mockReturnValue(true);
     const activeBatch: Batch = {
       ...baseBatch,
       id: 'batch-activo',
@@ -156,18 +156,19 @@ describe('BatchList', () => {
     );
 
     const row = screen.getByRole('row', { name: /LOTE-ACTIVO/i });
-    expect(within(row).getByText('0 piezas')).toHaveClass('bg-red-100');
+    expect(within(row).getByText('0 piezas')).toHaveClass('bg-rose-500/15');
 
     const dateCell = within(row).getByText((_content, element) => {
       return element?.tagName.toLowerCase() === 'span'
-        && element.className === ''
+        && element.className === 'text-slate-300'
         && !!element.textContent?.includes('2999');
     });
-    expect(dateCell).not.toHaveClass('text-red-600');
+    expect(dateCell).not.toHaveClass('text-rose-400');
 
     await user.click(within(row).getByRole('button', { name: /Movimientos/i }));
     await user.click(within(row).getByRole('button', { name: /Editar/i }));
     await user.click(within(row).getByRole('button', { name: /Eliminar/i }));
+    await user.click(within(screen.getByRole('alertdialog')).getByRole('button', { name: /^Eliminar$/i }));
 
     expect(onView).toHaveBeenCalledWith(activeBatch);
     expect(onEdit).toHaveBeenCalledWith(activeBatch);
@@ -214,9 +215,9 @@ describe('ProductDetail', () => {
     );
 
     await user.click(screen.getByRole('button', { name: /\+ Nuevo Lote/i }));
-    expect(screen.getByRole('heading', { name: /Nuevo Lote/i })).toBeInTheDocument();
+    expect(within(screen.getByRole('dialog')).getAllByRole('heading', { name: /Nuevo Lote/i }).length).toBeGreaterThan(0);
 
-    await user.click(screen.getByRole('button', { name: /Cancelar/i }));
+    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: /Cancelar/i }));
 
     expect(onAddBatch).not.toHaveBeenCalled();
     expect(screen.queryByRole('heading', { name: /Nuevo Lote/i })).not.toBeInTheDocument();
@@ -266,11 +267,13 @@ describe('BatchDetail', () => {
       />
     );
 
-    expect(screen.getByText('+5 piezas')).toHaveClass('text-green-600');
+    expect(screen.getByText('+5 piezas')).toHaveClass('text-emerald-400');
     expect(screen.getByText('15 piezas')).toBeInTheDocument();
     expect(screen.getByText((_content, element) => {
-      return element?.classList.contains('text-gray-900')
-        && !!element.textContent?.includes('2999');
+      return Boolean(
+        element?.classList.contains('text-slate-100')
+        && element.textContent?.includes('2999')
+      );
     })).toBeInTheDocument();
   });
 
@@ -286,9 +289,9 @@ describe('BatchDetail', () => {
       />
     );
 
-    expect(screen.getByText('-3 piezas')).toHaveClass('text-red-600');
+    expect(screen.getByText('-3 piezas')).toHaveClass('text-rose-400');
     expect(screen.getByText((_content, element) => {
-      return element?.className === 'text-lg font-semibold text-red-600'
+      return element?.className === 'mt-3 text-lg font-semibold text-rose-400'
         && element.textContent !== '-3 piezas';
     })).toBeInTheDocument();
   });
@@ -310,9 +313,9 @@ describe('BatchDetail', () => {
     );
 
     await user.click(screen.getByRole('button', { name: /\+ Nuevo Movimiento/i }));
-    expect(screen.getByRole('heading', { name: /Registrar Movimiento/i })).toBeInTheDocument();
+    expect(within(screen.getByRole('dialog')).getAllByRole('heading', { name: /Registrar Movimiento/i }).length).toBeGreaterThan(0);
 
-    await user.click(screen.getByRole('button', { name: /Cancelar/i }));
+    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: /Cancelar/i }));
     expect(screen.queryByRole('heading', { name: /Registrar Movimiento/i })).not.toBeInTheDocument();
     expect(onAddMovement).not.toHaveBeenCalled();
 

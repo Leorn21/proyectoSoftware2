@@ -1,9 +1,13 @@
 import { useState, useMemo } from 'react';
+import { Boxes, PackageSearch, PlusCircle } from 'lucide-react';
 import { useProducts } from './hooks/useProducts';
 import { useBatches } from './hooks/useBatches';
 import { useStockMovements } from './hooks/useStockMovements';
 import { ProductForm, ProductList, SearchBar, ProductDetail, BatchDetail } from './components';
 import { Product, ProductFormData, BatchFormData, Batch, StockMovementFormData } from './types';
+import { Button } from './components/ui/button';
+import { Card, CardContent } from './components/ui/card';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from './components/ui/dialog';
 
 /**
  * Trazabilidad REQ-NF02:
@@ -115,29 +119,32 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-slate-950">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Cargando aplicación...</p>
+          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-sky-400"></div>
+          <p className="text-slate-300">Cargando aplicación...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.18),_transparent_28%),linear-gradient(180deg,_#020617_0%,_#0f172a_48%,_#020617_100%)] text-slate-100">
       {/* Header */}
-      <header className="bg-white shadow">
+      <header className="border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                📦 Gestor de Inventario
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.3em] text-sky-300">
+                Inventario inteligente
+              </p>
+              <h1 className="text-3xl font-bold text-slate-50">
+                Gestor de Inventario
               </h1>
-              <p className="text-gray-600 mt-1">Sistema de gestión de productos y lotes</p>
+              <p className="mt-1 text-slate-400">Sistema de gestión de productos, lotes y movimientos con una interfaz renovada.</p>
             </div>
-            <div className="text-sm text-gray-600 bg-blue-50 px-4 py-2 rounded-lg">
-              <strong>{products.length}</strong> productos | <strong>{batches.length}</strong> lotes
+            <div className="rounded-2xl border border-slate-800 bg-slate-900/80 px-4 py-3 text-sm text-slate-300 shadow-lg shadow-black/20">
+              <strong className="text-sky-300">{products.length}</strong> productos | <strong className="text-sky-300">{batches.length}</strong> lotes
             </div>
           </div>
         </div>
@@ -181,8 +188,57 @@ function App() {
         {!selectedProduct && !selectedBatchId && (
           <>
             {/* Formulario de Producto */}
-            {showForm && (
-              <div className="mb-8">
+            {/* Sección de búsqueda y botón */}
+            <div className="mb-8">
+              <Card className="overflow-hidden">
+                <CardContent className="grid gap-6 p-6 md:grid-cols-[1.7fr,1fr] md:items-end">
+                  <div>
+                    <div className="mb-4 flex items-center gap-3">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-800 bg-slate-900/80 text-sky-300">
+                        <PackageSearch className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h2 className="text-xl font-semibold text-slate-50">Explorar productos</h2>
+                        <p className="text-sm text-slate-400">Buscá por código, nombre, descripción o categoría.</p>
+                      </div>
+                    </div>
+                    <label className="mb-2 block text-sm font-medium text-slate-300">
+                    Buscar producto
+                  </label>
+                  <SearchBar onSearch={setSearchQuery} />
+                  </div>
+                  <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-5">
+                    <div className="mb-4 flex items-center gap-3">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-800 bg-slate-950 text-sky-300">
+                        <Boxes className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-100">Panel rápido</p>
+                        <p className="text-sm text-slate-400">Creá productos y mantené el inventario al día.</p>
+                      </div>
+                    </div>
+                    {!showForm && (
+                      <Button
+                        onClick={() => setShowForm(true)}
+                        className="w-full"
+                      >
+                        <PlusCircle className="h-4 w-4" />
+                        + Nuevo Producto
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Dialog open={showForm} onOpenChange={(open) => !open && handleFormCancel()}>
+              <DialogContent>
+                <DialogTitle className="sr-only">
+                  {editingProduct ? 'Editar Producto' : 'Nuevo Producto'}
+                </DialogTitle>
+                <DialogDescription className="sr-only">
+                  Formulario para crear o editar productos del inventario.
+                </DialogDescription>
                 <ProductForm
                   onSubmit={handleFormSubmit}
                   onCancel={handleFormCancel}
@@ -195,32 +251,12 @@ function App() {
                   } : undefined}
                   isEditing={!!editingProduct}
                 />
-              </div>
-            )}
-
-            {/* Sección de búsqueda y botón */}
-            <div className="mb-8">
-              <div className="flex flex-col md:flex-row gap-4 items-end">
-                <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Buscar producto
-                  </label>
-                  <SearchBar onSearch={setSearchQuery} />
-                </div>
-                {!showForm && (
-                  <button
-                    onClick={() => setShowForm(true)}
-                    className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium whitespace-nowrap"
-                  >
-                    + Nuevo Producto
-                  </button>
-                )}
-              </div>
-            </div>
+              </DialogContent>
+            </Dialog>
 
             {/* Lista de productos */}
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <h2 className="mb-4 text-2xl font-bold text-slate-50">
                 {searchQuery ? `Resultados de búsqueda (${displayedProducts.length})` : 'Lista de Productos'}
               </h2>
               <ProductList
@@ -236,8 +272,8 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-gray-600 text-sm">
+      <footer className="mt-12 border-t border-slate-800/80 bg-slate-950/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-sm text-slate-500">
           <p>Sistema de Gestión de Inventario v1.0 | Cumple con REQ-F01 y REQ-F02</p>
         </div>
       </footer>

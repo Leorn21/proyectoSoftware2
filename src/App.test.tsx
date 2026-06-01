@@ -193,24 +193,25 @@ describe('Gestor de Inventario - trazabilidad funcional', () => {
 
   test('REQ-F01 eliminar producto con confirmación', async () => {
     const user = await renderInventory();
-    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true);
     await createProduct(user);
 
     await user.click(within(getProductRow(/Martillo/i)).getByRole('button', { name: /Eliminar/i }));
+    const dialog = screen.getByRole('alertdialog');
+    expect(dialog).toBeInTheDocument();
+    expect(within(dialog).getByText(/Eliminar producto "Martillo"/i)).toBeInTheDocument();
+    await user.click(within(dialog).getByRole('button', { name: /^Eliminar$/i }));
 
-    expect(confirm).toHaveBeenCalledWith('¿Eliminar producto "Martillo"?');
     expect(screen.queryByText('Martillo')).not.toBeInTheDocument();
     expect(screen.getByText(/No hay productos registrados/i)).toBeInTheDocument();
   });
 
   test('REQ-F01 cancelar eliminación', async () => {
     const user = await renderInventory();
-    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
     await createProduct(user);
 
     await user.click(within(getProductRow(/Martillo/i)).getByRole('button', { name: /Eliminar/i }));
+    await user.click(within(screen.getByRole('alertdialog')).getByRole('button', { name: /^Cancelar$/i }));
 
-    expect(confirm).toHaveBeenCalled();
     expect(screen.getByText('Martillo')).toBeInTheDocument();
   });
 
@@ -257,12 +258,12 @@ describe('Gestor de Inventario - trazabilidad funcional', () => {
 
   test('REQ-F02 eliminar lote', async () => {
     const user = await renderInventory();
-    vi.spyOn(window, 'confirm').mockReturnValue(true);
     await createProduct(user);
     await openProductLots(user);
     await createBatch(user);
 
     await user.click(within(screen.getByRole('row', { name: /LOTE-001/i })).getByRole('button', { name: /Eliminar/i }));
+    await user.click(within(screen.getByRole('alertdialog')).getByRole('button', { name: /^Eliminar$/i }));
 
     expect(screen.queryByText('LOTE-001')).not.toBeInTheDocument();
     expect(screen.getByText(/No hay lotes registrados/i)).toBeInTheDocument();
@@ -281,9 +282,9 @@ describe('Gestor de Inventario - trazabilidad funcional', () => {
 
     const expiredRow = screen.getByRole('row', { name: /LOTE-VENCIDO/i });
     const expiredDate = within(expiredRow).getByText((_content, element) => {
-      return element?.classList.contains('text-red-600') ?? false;
+      return element?.classList.contains('text-rose-400') ?? false;
     });
-    expect(expiredDate).toHaveClass('text-red-600');
+    expect(expiredDate).toHaveClass('text-rose-400');
   });
 
   test('REQ-F03 registrar ingreso y egreso, actualizar stock y mostrar historial', async () => {

@@ -1,6 +1,10 @@
 import { useState } from 'react';
+import { ArrowLeft, ArrowUpDown, ClipboardList } from 'lucide-react';
 import { Product, Batch, StockMovement, StockMovementFormData } from '../types';
 import { StockMovementForm, StockMovementList } from './index';
+import { Button } from './ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from './ui/dialog';
 
 interface BatchDetailProps {
   product: Product;
@@ -47,86 +51,102 @@ export const BatchDetail = ({
   const availableQuantity = batch.initialQuantity + totalMovement;
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <button
+    <Card className="overflow-hidden">
+      <CardHeader className="border-b border-slate-800 bg-slate-900/80">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <Button
           onClick={onBack}
-          className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
+          variant="ghost"
+          className="w-fit px-0 text-sky-300 hover:bg-transparent hover:text-sky-200"
         >
-          ← Volver
-        </button>
-        <h2 className="text-2xl font-bold text-gray-900">Lote {batch.batchNumber}</h2>
-        <div className="text-right text-sm text-gray-600">
-          <p>Producto: <span className="font-semibold">{product.name}</span></p>
+            <ArrowLeft className="h-4 w-4" />
+            Volver
+          </Button>
+          <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.3em] text-sky-300">Detalle de lote</p>
+            <CardTitle className="text-3xl">Lote {batch.batchNumber}</CardTitle>
+          </div>
+          <div className="rounded-2xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-right text-sm text-slate-400">
+            <p>Producto: <span className="font-semibold text-slate-100">{product.name}</span></p>
+          </div>
         </div>
-      </div>
+      </CardHeader>
 
-      {/* Información del Lote */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 pb-6 border-b">
-        <div>
-          <p className="text-sm text-gray-600">Cantidad Inicial</p>
-          <p className="text-lg font-semibold text-gray-900">{batch.initialQuantity} {product.unit}</p>
+      <CardContent className="space-y-8 p-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+          <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-5">
+            <p className="text-sm text-slate-400">Cantidad Inicial</p>
+            <p className="mt-3 text-lg font-semibold text-slate-100">{batch.initialQuantity} {product.unit}</p>
+          </div>
+          <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-5">
+            <p className="text-sm text-slate-400">Movimiento Neto</p>
+            <p className={`mt-3 text-lg font-semibold ${totalMovement > 0 ? 'text-emerald-400' : totalMovement < 0 ? 'text-rose-400' : 'text-slate-300'}`}>
+              {totalMovement > 0 ? '+' : ''}{totalMovement} {product.unit}
+            </p>
+          </div>
+          <div className="rounded-3xl border border-sky-500/20 bg-sky-500/10 p-5">
+            <p className="text-sm text-sky-200/80">Cantidad Disponible</p>
+            <p className="mt-3 text-2xl font-bold text-sky-300">{availableQuantity} {product.unit}</p>
+          </div>
+          <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-5">
+            <p className="text-sm text-slate-400">Vencimiento</p>
+            <p className={`mt-3 text-lg font-semibold ${
+              batch.expiryDate && new Date(batch.expiryDate) < new Date()
+                ? 'text-rose-400'
+                : 'text-slate-100'
+            }`}>
+              {batch.expiryDate
+                ? batch.expiryDate.toLocaleDateString('es-ES')
+                : '-'}
+            </p>
+          </div>
         </div>
-        <div>
-          <p className="text-sm text-gray-600">Movimiento Neto</p>
-          <p className={`text-lg font-semibold ${totalMovement > 0 ? 'text-green-600' : totalMovement < 0 ? 'text-red-600' : 'text-gray-600'}`}>
-            {totalMovement > 0 ? '+' : ''}{totalMovement} {product.unit}
-          </p>
-        </div>
-        <div>
-          <p className="text-sm text-gray-600">Cantidad Disponible</p>
-          <p className="text-2xl font-bold text-green-600">{availableQuantity} {product.unit}</p>
-        </div>
-        <div>
-          <p className="text-sm text-gray-600">Vencimiento</p>
-          <p className={`text-lg font-semibold ${
-            batch.expiryDate && new Date(batch.expiryDate) < new Date()
-              ? 'text-red-600'
-              : 'text-gray-900'
-          }`}>
-            {batch.expiryDate
-              ? batch.expiryDate.toLocaleDateString('es-ES')
-              : '-'}
-          </p>
-        </div>
-      </div>
 
-      {/* Sección de Movimientos */}
-      <div className="border-t pt-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-bold text-gray-900">
-            Movimientos de Stock ({movements.length})
-          </h3>
+        <div className="border-t border-slate-800 pt-6">
+          <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-800 bg-slate-900/80 text-sky-300">
+                <ClipboardList className="h-5 w-5" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-50">
+                Movimientos de Stock ({movements.length})
+              </h3>
+            </div>
           {!showMovementForm && (
-            <button
+              <Button
               onClick={() => setShowMovementForm(true)}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
+                className="w-full sm:w-auto"
             >
+                <ArrowUpDown className="h-4 w-4" />
               + Nuevo Movimiento
-            </button>
+              </Button>
           )}
         </div>
 
-        {/* Formulario de Movimiento */}
-        {showMovementForm && (
-          <div className="mb-6">
-            <StockMovementForm
-              batchNumber={batch.batchNumber}
-              availableQuantity={availableQuantity}
-              onSubmit={handleAddMovement}
-              onCancel={handleCancelMovement}
-            />
-          </div>
-        )}
+          <Dialog open={showMovementForm} onOpenChange={(open) => !open && handleCancelMovement()}>
+            <DialogContent>
+              <DialogTitle className="sr-only">
+                Registrar Movimiento
+              </DialogTitle>
+              <DialogDescription className="sr-only">
+                Formulario para registrar ingresos o egresos en el lote actual.
+              </DialogDescription>
+              <StockMovementForm
+                batchNumber={batch.batchNumber}
+                availableQuantity={availableQuantity}
+                onSubmit={handleAddMovement}
+                onCancel={handleCancelMovement}
+              />
+            </DialogContent>
+          </Dialog>
 
-        {/* Lista de Movimientos */}
-        <StockMovementList
-          movements={movements}
-          onDelete={onDeleteMovement}
-          productUnit={product.unit}
-        />
-      </div>
-    </div>
+          <StockMovementList
+            movements={movements}
+            onDelete={onDeleteMovement}
+            productUnit={product.unit}
+          />
+        </div>
+      </CardContent>
+    </Card>
   );
 };

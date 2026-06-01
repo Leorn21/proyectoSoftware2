@@ -1,4 +1,7 @@
 import { StockMovement } from '../types';
+import { ConfirmDialog } from './ConfirmDialog';
+import { Button } from './ui/button';
+import { Card, CardContent } from './ui/card';
 
 interface StockMovementListProps {
   movements: StockMovement[];
@@ -18,66 +21,68 @@ export const StockMovementList = ({
 }: StockMovementListProps) => {
   if (movements.length === 0) {
     return (
-      <div className="bg-gray-50 rounded-lg p-6 text-center border border-dashed border-gray-300">
-        <p className="text-gray-500">No hay movimientos registrados para este lote.</p>
-      </div>
+      <Card className="border-dashed border-slate-700/80 bg-slate-950/50">
+        <CardContent className="p-8 text-center">
+          <p className="text-slate-400">No hay movimientos registrados para este lote.</p>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden">
+    <Card className="overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-gray-100 border-b">
-              <th className="px-4 py-3 text-left font-semibold text-gray-700">Tipo</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-700">Cantidad</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-700">Razón</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-700">Fecha</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-700">Acciones</th>
+            <tr className="border-b border-slate-800 bg-slate-900/80">
+              <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Tipo</th>
+              <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Cantidad</th>
+              <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Razón</th>
+              <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Fecha</th>
+              <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Acciones</th>
             </tr>
           </thead>
           <tbody>
             {movements.map((movement) => (
-              <tr key={movement.id} className="border-b hover:bg-gray-50 transition-colors">
-                <td className="px-4 py-3">
+              <tr key={movement.id} className="border-b border-slate-900 transition-colors hover:bg-slate-900/60">
+                <td className="px-4 py-4">
                   <span
-                    className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
+                    className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${
                       movement.type === 'ingreso'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
+                        ? 'bg-emerald-500/15 text-emerald-300'
+                        : 'bg-rose-500/15 text-rose-300'
                     }`}
                   >
                     {movement.type === 'ingreso' ? '+ Ingreso' : '- Egreso'}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-gray-700 font-medium">
+                <td className="px-4 py-4 font-medium text-slate-200">
                   {movement.quantity} {productUnit}
                 </td>
-                <td className="px-4 py-3 text-gray-700">
+                <td className="px-4 py-4 text-slate-300">
                   {movement.reason || '-'}
                 </td>
-                <td className="px-4 py-3 text-gray-700 text-xs">
+                <td className="px-4 py-4 text-xs text-slate-400">
                   {movement.createdAt.toLocaleDateString('es-ES')} {' '}
                   {movement.createdAt.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}
                 </td>
-                <td className="px-4 py-3">
-                  <button
-                    onClick={() => {
-                      if (window.confirm(`¿Eliminar este movimiento?`)) {
-                        onDelete(movement.id);
-                      }
-                    }}
-                    className="px-2 py-1 bg-red-500 text-white text-xs rounded hover:bg-red-600 transition-colors"
-                  >
-                    Eliminar
-                  </button>
+                <td className="px-4 py-4">
+                  <ConfirmDialog
+                    title="Eliminar movimiento"
+                    description="Se eliminará este registro del historial del lote."
+                    onConfirm={() => onDelete(movement.id)}
+                    trigger={
+                      <Button variant="destructive" size="sm">
+                        Eliminar
+                      </Button>
+                    }
+                  />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-    </div>
+    </Card>
   );
 };

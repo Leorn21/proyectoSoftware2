@@ -1,4 +1,7 @@
 import { Product } from '../types';
+import { ConfirmDialog } from './ConfirmDialog';
+import { Button } from './ui/button';
+import { Card, CardContent } from './ui/card';
 
 interface ProductListProps {
   products: Product[];
@@ -25,67 +28,71 @@ export const ProductList = ({
 }: ProductListProps) => {
   if (products.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8 text-center">
-        <p className="text-gray-500 text-lg">
+      <Card className="border-dashed border-slate-700/80 bg-slate-950/50">
+        <CardContent className="p-10 text-center">
+          <p className="text-lg text-slate-400">
           {searchQuery ? 'No se encontraron productos.' : 'No hay productos registrados. ¡Crea uno nuevo!'}
-        </p>
-      </div>
+          </p>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <Card className="overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="bg-gray-100 border-b">
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Código</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Nombre</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Descripción</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Categoría</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Unidad</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Acciones</th>
+            <tr className="border-b border-slate-800 bg-slate-900/80">
+              <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Código</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Nombre</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Descripción</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Categoría</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Unidad</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Acciones</th>
             </tr>
           </thead>
           <tbody>
             {products.map((product) => (
-              <tr key={product.id} className="border-b hover:bg-gray-50 transition-colors">
-                <td className="px-6 py-4 text-sm font-medium text-gray-900">{product.code}</td>
-                <td className="px-6 py-4 text-sm text-gray-700">{product.name}</td>
-                <td className="px-6 py-4 text-sm text-gray-600 max-w-xs truncate">{product.description}</td>
+              <tr key={product.id} className="border-b border-slate-900 transition-colors hover:bg-slate-900/60">
+                <td className="px-6 py-4 text-sm font-medium text-slate-100">{product.code}</td>
+                <td className="px-6 py-4 text-sm text-slate-200">{product.name}</td>
+                <td className="max-w-xs truncate px-6 py-4 text-sm text-slate-400">{product.description}</td>
                 <td className="px-6 py-4 text-sm">
-                  <span className="inline-block bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-xs font-medium">
+                  <span className="inline-flex rounded-full border border-sky-400/20 bg-sky-400/10 px-3 py-1 text-xs font-medium text-sky-200">
                     {product.category}
                   </span>
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-700">{product.unit}</td>
+                <td className="px-6 py-4 text-sm text-slate-300">{product.unit}</td>
                 <td className="px-6 py-4 text-sm">
                   <div className="flex gap-2">
                     {onSelectProduct && (
-                      <button
+                      <Button
                         onClick={() => onSelectProduct(product)}
-                        className="px-3 py-1 bg-purple-500 text-white text-xs rounded hover:bg-purple-600 transition-colors font-medium"
+                        variant="secondary"
+                        size="sm"
                         title="Ver lotes del producto"
                       >
                         Lotes
-                      </button>
+                      </Button>
                     )}
-                    <button
+                    <Button
                       onClick={() => onEdit(product)}
-                      className="px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-colors font-medium"
+                      variant="outline"
+                      size="sm"
                     >
                       Editar
-                    </button>
-                    <button
-                      onClick={() => {
-                        if (window.confirm(`¿Eliminar producto "${product.name}"?`)) {
-                          onDelete(product.id);
-                        }
-                      }}
-                      className="px-3 py-1 bg-red-500 text-white text-xs rounded hover:bg-red-600 transition-colors font-medium"
-                    >
-                      Eliminar
-                    </button>
+                    </Button>
+                    <ConfirmDialog
+                      title={`Eliminar producto "${product.name}"`}
+                      description="Esta acción quitará el producto del inventario y no se puede deshacer."
+                      onConfirm={() => onDelete(product.id)}
+                      trigger={
+                        <Button variant="destructive" size="sm">
+                          Eliminar
+                        </Button>
+                      }
+                    />
                   </div>
                 </td>
               </tr>
@@ -93,9 +100,9 @@ export const ProductList = ({
           </tbody>
         </table>
       </div>
-      <div className="px-6 py-3 bg-gray-50 border-t text-sm text-gray-600">
-        Total: <span className="font-semibold">{products.length}</span> producto(s)
+      <div className="border-t border-slate-800 bg-slate-900/70 px-6 py-4 text-sm text-slate-400">
+        Total: <span className="font-semibold text-slate-100">{products.length}</span> producto(s)
       </div>
-    </div>
+    </Card>
   );
 };
