@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from './ui/alert-dialog';
+} from "./ui/alert-dialog";
 
 interface ConfirmDialogProps {
   trigger: React.ReactNode;
@@ -23,8 +23,8 @@ export const ConfirmDialog = ({
   trigger,
   title,
   description,
-  confirmLabel = 'Eliminar',
-  cancelLabel = 'Cancelar',
+  confirmLabel = "Eliminar",
+  cancelLabel = "Cancelar",
   onConfirm,
 }: ConfirmDialogProps) => {
   return (
@@ -40,7 +40,9 @@ export const ConfirmDialog = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{cancelLabel}</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>{confirmLabel}</AlertDialogAction>
+          <AlertDialogAction onClick={onConfirm}>
+            {confirmLabel}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

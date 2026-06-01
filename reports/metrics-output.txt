@@ -1,0 +1,12 @@
+
+> gestor-inventario@1.0.0 metrics
+> mkdir -p reports && rm -rf .metrics-tmp-cjs && node ./node_modules/typescript/bin/tsc -p tsconfig.json --outDir .metrics-tmp-cjs --target ES5 --module commonjs --moduleResolution node --sourceMap false --noEmit false --allowImportingTsExtensions false && find .metrics-tmp-cjs -name "*.test.js" -delete && rm -rf .metrics-tmp-cjs/test && node ./node_modules/complexity-report/src/index.js -o reports/complexity-report.json -f json -e -p ".*\.js$" .metrics-tmp-cjs && node ./scripts/collect-metrics.mjs
+
+{
+  "generatedAt": "2026-06-01T23:11:21.469Z",
+  "maxCyclomaticComplexity": 10,
+  "maxCyclomaticFile": "/home/sierraecho/Descargas/proyectoSoftware2/.metrics-tmp-cjs/components/ProductForm.js",
+  "maxCyclomaticFunction": "ProductForm",
+  "averageMaintainabilityIndex": 110.6,
+  "moduleCount": 22
+}

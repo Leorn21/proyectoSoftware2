@@ -56,14 +56,14 @@ export interface BatchFormData {
 export interface StockMovement {
   id: string; // ID único del movimiento
   batchId: string; // Referencia al lote
-  type: 'ingreso' | 'egreso'; // Tipo de movimiento
+  type: "ingreso" | "egreso"; // Tipo de movimiento
   quantity: number; // Cantidad movida
   reason?: string; // Razón del movimiento (opcional)
   createdAt: Date; // Fecha del movimiento
 }
 
 export interface StockMovementFormData {
-  type: 'ingreso' | 'egreso';
+  type: "ingreso" | "egreso";
   quantity: number;
   reason?: string;
 }

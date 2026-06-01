@@ -11,14 +11,15 @@
 
 ### REQ-F01: Gestión de Productos
 
-| Aspecto | Detalle |
-|--------|---------|
-| **Descripción** | El sistema debe permitir registrar, editar, consultar y eliminar productos, indicando datos básicos como código, nombre, descripción, categoría y unidad de medida. |
-| **Usuario Objetivo** | Ferreterías y empresas de manufactura |
-| **Datos** | Código, nombre, descripción, categoría, unidad de medida |
-| **Funciones** | CRUD (Create, Read, Update, Delete) |
+| Aspecto              | Detalle                                                                                                                                                             |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**      | El sistema debe permitir registrar, editar, consultar y eliminar productos, indicando datos básicos como código, nombre, descripción, categoría y unidad de medida. |
+| **Usuario Objetivo** | Ferreterías y empresas de manufactura                                                                                                                               |
+| **Datos**            | Código, nombre, descripción, categoría, unidad de medida                                                                                                            |
+| **Funciones**        | CRUD (Create, Read, Update, Delete)                                                                                                                                 |
 
 **Implementación:**
+
 - `src/components/ProductForm.tsx` — Formulario de registro/edición
 - `src/components/ProductList.tsx` — Tabla de consulta
 - `src/components/SearchBar.tsx` — Búsqueda por múltiples campos
@@ -26,6 +27,7 @@
 - `src/App.tsx` — Integración de flujo
 
 **Pruebas Unitarias/Integración:**
+
 - `src/App.test.tsx` → Crear producto válido
 - `src/App.test.tsx` → Impedir crear con campos obligatorios vacíos
 - `src/App.test.tsx` → Editar producto
@@ -39,14 +41,15 @@
 
 ### REQ-F02: Gestión de Lotes
 
-| Aspecto | Detalle |
-|--------|---------|
-| **Descripción** | El sistema debe permitir registrar lotes asociados a un producto, indicando número de lote, cantidad inicial, cantidad disponible, fecha de ingreso y fecha de vencimiento, cuando corresponda. |
-| **Usuario Objetivo** | Ferreterías y empresas de manufactura |
-| **Datos** | Número de lote, cantidad inicial, cantidad disponible, fecha de ingreso, fecha de vencimiento (opcional), asociación a producto |
-| **Funciones** | CRUD (Create, Read, Update, Delete), vinculación a producto |
+| Aspecto              | Detalle                                                                                                                                                                                         |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**      | El sistema debe permitir registrar lotes asociados a un producto, indicando número de lote, cantidad inicial, cantidad disponible, fecha de ingreso y fecha de vencimiento, cuando corresponda. |
+| **Usuario Objetivo** | Ferreterías y empresas de manufactura                                                                                                                                                           |
+| **Datos**            | Número de lote, cantidad inicial, cantidad disponible, fecha de ingreso, fecha de vencimiento (opcional), asociación a producto                                                                 |
+| **Funciones**        | CRUD (Create, Read, Update, Delete), vinculación a producto                                                                                                                                     |
 
 **Implementación:**
+
 - `src/components/BatchForm.tsx` — Formulario de lote
 - `src/components/BatchList.tsx` — Tabla de lotes
 - `src/components/ProductDetail.tsx` — Vista de lotes por producto
@@ -55,6 +58,7 @@
 - `src/App.tsx` — Integración de flujo
 
 **Pruebas Unitarias/Integración:**
+
 - `src/App.test.tsx` → Crear lote asociado a producto
 - `src/App.test.tsx` → Mostrar stock disponible por lote
 - `src/App.test.tsx` → Impedir lote sin número y con cantidad ≤ 0
@@ -71,14 +75,15 @@
 
 ### REQ-F03: Movimientos de Stock
 
-| Aspecto | Detalle |
-|--------|---------|
-| **Descripción** | El sistema debe permitir registrar movimientos de stock sobre un lote, diferenciando ingresos y egresos, actualizando automáticamente la cantidad disponible del lote. |
-| **Usuario Objetivo** | Ferreterías y empresas de manufactura |
-| **Datos** | Tipo (ingreso/egreso), cantidad, fecha, lote asociado, razón (opcional) |
-| **Funciones** | Registro, visualización de historial, recalcular saldo automático |
+| Aspecto              | Detalle                                                                                                                                                                |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**      | El sistema debe permitir registrar movimientos de stock sobre un lote, diferenciando ingresos y egresos, actualizando automáticamente la cantidad disponible del lote. |
+| **Usuario Objetivo** | Ferreterías y empresas de manufactura                                                                                                                                  |
+| **Datos**            | Tipo (ingreso/egreso), cantidad, fecha, lote asociado, razón (opcional)                                                                                                |
+| **Funciones**        | Registro, visualización de historial, recalcular saldo automático                                                                                                      |
 
 **Implementación:**
+
 - `src/components/StockMovementForm.tsx` — Formulario de movimiento
 - `src/components/StockMovementList.tsx` — Historial de movimientos
 - `src/components/BatchDetail.tsx` — Visualización de movimientos y detalle
@@ -87,6 +92,7 @@
 - `src/App.tsx` — Integración de flujo
 
 **Pruebas Unitarias/Integración:**
+
 - `src/App.test.tsx` → Registrar ingreso y egreso
 - `src/App.test.tsx` → Actualizar stock automáticamente
 - `src/App.test.tsx` → Mostrar historial de movimientos
@@ -102,19 +108,21 @@
 
 ### REQ-F04: Validación de Stock
 
-| Aspecto | Detalle |
-|--------|---------|
-| **Descripción** | El sistema debe validar que no se puedan registrar egresos mayores a la cantidad disponible del lote seleccionado. |
-| **Usuario Objetivo** | Ferreterías y empresas de manufactura |
-| **Validaciones** | Egreso ≤ disponible, cantidad > 0, no valores negativos |
-| **Acción** | Bloquear registro inválido, mostrar error |
+| Aspecto              | Detalle                                                                                                            |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **Descripción**      | El sistema debe validar que no se puedan registrar egresos mayores a la cantidad disponible del lote seleccionado. |
+| **Usuario Objetivo** | Ferreterías y empresas de manufactura                                                                              |
+| **Validaciones**     | Egreso ≤ disponible, cantidad > 0, no valores negativos                                                            |
+| **Acción**           | Bloquear registro inválido, mostrar error                                                                          |
 
 **Implementación:**
+
 - `src/components/StockMovementForm.tsx` — Validación pre-envío
 - `src/hooks/useStockMovements.ts` — Validación en lógica de negocio
 - `src/components/BatchDetail.tsx` — Bloqueo visual
 
 **Pruebas Unitarias/Integración:**
+
 - `src/App.test.tsx` → Bloquea egreso mayor al stock disponible
 - `src/App.test.tsx` → No registra movimiento inválido
 - `src/App.test.tsx` → Bloquea movimiento con cantidad 0
@@ -127,14 +135,15 @@
 
 ### REQ-F05: Consulta de Inventario
 
-| Aspecto | Detalle |
-|--------|---------|
-| **Descripción** | El sistema debe permitir consultar el inventario mediante un listado de productos, mostrando el stock total disponible por producto y el detalle de los lotes asociados. |
-| **Usuario Objetivo** | Ferreterías y empresas de manufactura |
-| **Vistas** | Listado de productos, stock total, detalle de lotes |
-| **Funciones** | Búsqueda, filtrado, cálculo de stock total |
+| Aspecto              | Detalle                                                                                                                                                                  |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Descripción**      | El sistema debe permitir consultar el inventario mediante un listado de productos, mostrando el stock total disponible por producto y el detalle de los lotes asociados. |
+| **Usuario Objetivo** | Ferreterías y empresas de manufactura                                                                                                                                    |
+| **Vistas**           | Listado de productos, stock total, detalle de lotes                                                                                                                      |
+| **Funciones**        | Búsqueda, filtrado, cálculo de stock total                                                                                                                               |
 
 **Implementación:**
+
 - `src/components/ProductList.tsx` — Tabla de productos con stock total
 - `src/components/ProductDetail.tsx` — Detalle de lotes del producto (suma stock)
 - `src/components/BatchList.tsx` — Tabla de lotes con disponible
@@ -144,6 +153,7 @@
 - `src/App.tsx` — Integración de flujo
 
 **Pruebas Unitarias/Integración:**
+
 - `src/App.test.tsx` → Calcula stock total por producto (suma de lotes disponibles)
 - `src/App.test.tsx` → Muestra detalle de lotes asociados
 - `src/App.test.tsx` → Mantiene datos después de recargar desde localStorage
@@ -158,19 +168,21 @@
 
 ### REQ-NF01: Simplicidad de Ejecución
 
-| Aspecto | Detalle |
-|--------|---------|
+| Aspecto         | Detalle                                                                                                                                                       |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Descripción** | El sistema debe ser simple de ejecutar y probar localmente, incluyendo un README con instrucciones claras de instalación, configuración, ejecución y pruebas. |
-| **Stack** | TypeScript, React, Vite, localStorage |
-| **Publicación** | README.md con comandos claros |
+| **Stack**       | TypeScript, React, Vite, localStorage                                                                                                                         |
+| **Publicación** | README.md con comandos claros                                                                                                                                 |
 
 **Implementación:**
+
 - `README.md` — Instrucciones completas
 - `package.json` — Scripts: `dev`, `build`, `test`, `test:watch`, `test:coverage`
 - `vite.config.ts` — Configuración de build
 - `tsconfig.json` — Configuración de TypeScript
 
 **Verificación:**
+
 ```bash
 npm install              # Instala dependencias
 npm run dev              # Abre en http://localhost:5173
@@ -180,6 +192,7 @@ npm run test:coverage    # Reporte de cobertura
 ```
 
 **Resultado:**
+
 - Instalación: 1 comando
 - Ejecución: 1 comando
 - Tests: 1 comando
@@ -189,13 +202,14 @@ npm run test:coverage    # Reporte de cobertura
 
 ### REQ-NF02: Estructura Clara y Trazable
 
-| Aspecto | Detalle |
-|--------|---------|
-| **Descripción** | El sistema debe mantener una estructura de código clara, modular y trazable, incorporando referencias a los requerimientos funcionales en el código y en los tests. |
-| **Trazabilidad** | Comentarios `// REQ-Fxx`, nombres de tests con `REQ-Fxx` |
-| **Documentación** | README con referencias, Matriz RTM |
+| Aspecto           | Detalle                                                                                                                                                             |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**   | El sistema debe mantener una estructura de código clara, modular y trazable, incorporando referencias a los requerimientos funcionales en el código y en los tests. |
+| **Trazabilidad**  | Comentarios `// REQ-Fxx`, nombres de tests con `REQ-Fxx`                                                                                                            |
+| **Documentación** | README con referencias, Matriz RTM                                                                                                                                  |
 
 **Implementación:**
+
 - `src/types/index.ts` — Interfaces comentadas con trazabilidad
 - `src/components/*.tsx` — Comentarios `// REQ-Fxx` en funcionalidades
 - `src/hooks/*.ts` — Comentarios `// REQ-Fxx` en lógica de negocio
@@ -205,6 +219,7 @@ npm run test:coverage    # Reporte de cobertura
 - `tests-results.txt` — Resumen de tests y cobertura
 
 **Verificación:**
+
 ```bash
 # Validación de código
 npx eslint "src/**/*.{ts,tsx}"     # 0 errores
@@ -215,6 +230,7 @@ npm run test:coverage              # 95.69%
 ```
 
 **Métricas:**
+
 - ESLint: 0 errores (exit code: 0)
 - Complejidad ciclomática promedio: 2.05
 - Índice de mantenibilidad: 110.17
@@ -225,15 +241,15 @@ npm run test:coverage              # 95.69%
 
 ## Matriz de Trazabilidad Resumida
 
-| Requisito | Componentes Principales | Tests Asociados | Cobertura |
-|-----------|------------------------|-----------------|-----------|
-| REQ-F01 | ProductForm, ProductList, useProducts | 6 tests | 88.52% |
-| REQ-F02 | BatchForm, BatchList, useBatches | 8 tests | 95.23% |
-| REQ-F03 | StockMovementForm, useStockMovements | 8 tests | 95.83% |
-| REQ-F04 | StockMovementForm (validación) | 5 tests | 96.15% |
-| REQ-F05 | ProductDetail, BatchList, SearchBar | 5 tests | 100% |
-| REQ-NF01 | README, package.json, vite.config | 4 verificaciones | OK |
-| REQ-NF02 | Toda estructura, trazabilidad | Métricas + tests | 95.69% |
+| Requisito | Componentes Principales               | Tests Asociados  | Cobertura |
+| --------- | ------------------------------------- | ---------------- | --------- |
+| REQ-F01   | ProductForm, ProductList, useProducts | 6 tests          | 88.52%    |
+| REQ-F02   | BatchForm, BatchList, useBatches      | 8 tests          | 95.23%    |
+| REQ-F03   | StockMovementForm, useStockMovements  | 8 tests          | 95.83%    |
+| REQ-F04   | StockMovementForm (validación)        | 5 tests          | 96.15%    |
+| REQ-F05   | ProductDetail, BatchList, SearchBar   | 5 tests          | 100%      |
+| REQ-NF01  | README, package.json, vite.config     | 4 verificaciones | OK        |
+| REQ-NF02  | Toda estructura, trazabilidad         | Métricas + tests | 95.69%    |
 
 ---
 

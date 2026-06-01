@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { Product, ProductFormData } from '../types';
+import { useState, useEffect } from "react";
+import { Product, ProductFormData } from "../types";
 
-type StoredProduct = Omit<Product, 'createdAt'> & {
+type StoredProduct = Omit<Product, "createdAt"> & {
   createdAt: string;
 };
 
@@ -20,13 +20,15 @@ export const useProducts = () => {
 
   // REQ-NF01: Carga datos locales para pruebas manuales reproducibles.
   useEffect(() => {
-    const stored = localStorage.getItem('products');
+    const stored = localStorage.getItem("products");
     if (stored) {
       const parsed = JSON.parse(stored) as StoredProduct[];
-      setProducts(parsed.map((p) => ({
-        ...p,
-        createdAt: new Date(p.createdAt)
-      })));
+      setProducts(
+        parsed.map((p) => ({
+          ...p,
+          createdAt: new Date(p.createdAt),
+        })),
+      );
     }
     setLoading(false);
   }, []);
@@ -34,7 +36,7 @@ export const useProducts = () => {
   // REQ-NF01: Persiste cambios locales entre recargas del navegador.
   useEffect(() => {
     if (!loading) {
-      localStorage.setItem('products', JSON.stringify(products));
+      localStorage.setItem("products", JSON.stringify(products));
     }
   }, [products, loading]);
 
@@ -43,7 +45,7 @@ export const useProducts = () => {
     const newProduct: Product = {
       id: Date.now().toString(),
       ...data,
-      createdAt: new Date()
+      createdAt: new Date(),
     };
     setProducts([...products, newProduct]);
     return newProduct;
@@ -51,29 +53,28 @@ export const useProducts = () => {
 
   // REQ-F01: Edicion de datos basicos sin alterar la identidad del producto.
   const updateProduct = (id: string, data: ProductFormData): void => {
-    setProducts(products.map(p =>
-      p.id === id ? { ...p, ...data } : p
-    ));
+    setProducts(products.map((p) => (p.id === id ? { ...p, ...data } : p)));
   };
 
   // REQ-F01: Baja de producto desde el inventario.
   const deleteProduct = (id: string): void => {
-    setProducts(products.filter(p => p.id !== id));
+    setProducts(products.filter((p) => p.id !== id));
   };
 
   // REQ-F01: Consulta puntual de producto por identificador interno.
   const getProduct = (id: string): Product | undefined => {
-    return products.find(p => p.id === id);
+    return products.find((p) => p.id === id);
   };
 
   // REQ-F05: Consulta de inventario por campos visibles del producto.
   const searchProducts = (query: string): Product[] => {
     const q = query.toLowerCase();
-    return products.filter(p =>
-      p.code.toLowerCase().includes(q) ||
-      p.name.toLowerCase().includes(q) ||
-      p.description.toLowerCase().includes(q) ||
-      p.category.toLowerCase().includes(q)
+    return products.filter(
+      (p) =>
+        p.code.toLowerCase().includes(q) ||
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q),
     );
   };
 
@@ -84,6 +85,6 @@ export const useProducts = () => {
     updateProduct,
     deleteProduct,
     getProduct,
-    searchProducts
+    searchProducts,
   };
 };

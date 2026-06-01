@@ -1,10 +1,15 @@
-import { useState } from 'react';
-import { ArrowLeft, ArrowUpDown, ClipboardList } from 'lucide-react';
-import { Product, Batch, StockMovement, StockMovementFormData } from '../types';
-import { StockMovementForm, StockMovementList } from './index';
-import { Button } from './ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from './ui/dialog';
+import { useState } from "react";
+import { ArrowLeft, ArrowUpDown, ClipboardList } from "lucide-react";
+import { Product, Batch, StockMovement, StockMovementFormData } from "../types";
+import { StockMovementForm, StockMovementList } from "./index";
+import { Button } from "./ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "./ui/dialog";
 
 interface BatchDetailProps {
   product: Product;
@@ -30,7 +35,7 @@ export const BatchDetail = ({
   movements,
   onAddMovement,
   onDeleteMovement,
-  onBack
+  onBack,
 }: BatchDetailProps) => {
   const [showMovementForm, setShowMovementForm] = useState(false);
 
@@ -45,7 +50,7 @@ export const BatchDetail = ({
 
   // REQ-F03: Reconstruye el saldo del lote desde la cantidad inicial y sus movimientos.
   const totalMovement = movements.reduce((sum, m) => {
-    return m.type === 'ingreso' ? sum + m.quantity : sum - m.quantity;
+    return m.type === "ingreso" ? sum + m.quantity : sum - m.quantity;
   }, 0);
 
   const availableQuantity = batch.initialQuantity + totalMovement;
@@ -55,19 +60,26 @@ export const BatchDetail = ({
       <CardHeader className="border-b border-slate-800 bg-slate-900/80">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <Button
-          onClick={onBack}
-          variant="ghost"
-          className="w-fit px-0 text-sky-300 hover:bg-transparent hover:text-sky-200"
-        >
+            onClick={onBack}
+            variant="ghost"
+            className="w-fit px-0 text-sky-300 hover:bg-transparent hover:text-sky-200"
+          >
             <ArrowLeft className="h-4 w-4" />
             Volver
           </Button>
           <div>
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.3em] text-sky-300">Detalle de lote</p>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.3em] text-sky-300">
+              Detalle de lote
+            </p>
             <CardTitle className="text-3xl">Lote {batch.batchNumber}</CardTitle>
           </div>
           <div className="rounded-2xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-right text-sm text-slate-400">
-            <p>Producto: <span className="font-semibold text-slate-100">{product.name}</span></p>
+            <p>
+              Producto:{" "}
+              <span className="font-semibold text-slate-100">
+                {product.name}
+              </span>
+            </p>
           </div>
         </div>
       </CardHeader>
@@ -76,28 +88,37 @@ export const BatchDetail = ({
         <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
           <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-5">
             <p className="text-sm text-slate-400">Cantidad Inicial</p>
-            <p className="mt-3 text-lg font-semibold text-slate-100">{batch.initialQuantity} {product.unit}</p>
+            <p className="mt-3 text-lg font-semibold text-slate-100">
+              {batch.initialQuantity} {product.unit}
+            </p>
           </div>
           <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-5">
             <p className="text-sm text-slate-400">Movimiento Neto</p>
-            <p className={`mt-3 text-lg font-semibold ${totalMovement > 0 ? 'text-emerald-400' : totalMovement < 0 ? 'text-rose-400' : 'text-slate-300'}`}>
-              {totalMovement > 0 ? '+' : ''}{totalMovement} {product.unit}
+            <p
+              className={`mt-3 text-lg font-semibold ${totalMovement > 0 ? "text-emerald-400" : totalMovement < 0 ? "text-rose-400" : "text-slate-300"}`}
+            >
+              {totalMovement > 0 ? "+" : ""}
+              {totalMovement} {product.unit}
             </p>
           </div>
           <div className="rounded-3xl border border-sky-500/20 bg-sky-500/10 p-5">
             <p className="text-sm text-sky-200/80">Cantidad Disponible</p>
-            <p className="mt-3 text-2xl font-bold text-sky-300">{availableQuantity} {product.unit}</p>
+            <p className="mt-3 text-2xl font-bold text-sky-300">
+              {availableQuantity} {product.unit}
+            </p>
           </div>
           <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-5">
             <p className="text-sm text-slate-400">Vencimiento</p>
-            <p className={`mt-3 text-lg font-semibold ${
-              batch.expiryDate && new Date(batch.expiryDate) < new Date()
-                ? 'text-rose-400'
-                : 'text-slate-100'
-            }`}>
+            <p
+              className={`mt-3 text-lg font-semibold ${
+                batch.expiryDate && new Date(batch.expiryDate) < new Date()
+                  ? "text-rose-400"
+                  : "text-slate-100"
+              }`}
+            >
               {batch.expiryDate
-                ? batch.expiryDate.toLocaleDateString('es-ES')
-                : '-'}
+                ? batch.expiryDate.toLocaleDateString("es-ES")
+                : "-"}
             </p>
           </div>
         </div>
@@ -112,18 +133,20 @@ export const BatchDetail = ({
                 Movimientos de Stock ({movements.length})
               </h3>
             </div>
-          {!showMovementForm && (
+            {!showMovementForm && (
               <Button
-              onClick={() => setShowMovementForm(true)}
+                onClick={() => setShowMovementForm(true)}
                 className="w-full sm:w-auto"
-            >
-                <ArrowUpDown className="h-4 w-4" />
-              + Nuevo Movimiento
+              >
+                <ArrowUpDown className="h-4 w-4" />+ Nuevo Movimiento
               </Button>
-          )}
-        </div>
+            )}
+          </div>
 
-          <Dialog open={showMovementForm} onOpenChange={(open) => !open && handleCancelMovement()}>
+          <Dialog
+            open={showMovementForm}
+            onOpenChange={(open) => !open && handleCancelMovement()}
+          >
             <DialogContent>
               <DialogTitle className="sr-only">
                 Registrar Movimiento

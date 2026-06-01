@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Search, X } from 'lucide-react';
+import { useState } from "react";
+import { Search, X } from "lucide-react";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -12,9 +12,9 @@ interface SearchBarProps {
  */
 export const SearchBar = ({
   onSearch,
-  placeholder = 'Buscar por código, nombre, categoría...'
+  placeholder = "Buscar por código, nombre, categoría...",
 }: SearchBarProps) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -23,8 +23,8 @@ export const SearchBar = ({
   };
 
   const handleClear = () => {
-    setQuery('');
-    onSearch('');
+    setQuery("");
+    onSearch("");
   };
 
   return (

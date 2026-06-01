@@ -1,0 +1,4 @@
+
+> gestor-inventario@1.0.0 lint:report
+> mkdir -p reports && eslint . --ext .ts,.tsx --format json --output-file reports/eslint-report.json
+

@@ -1,9 +1,9 @@
-import '@testing-library/jest-dom/vitest';
+import "@testing-library/jest-dom/vitest";
 
 if (!globalThis.localStorage) {
   const store = new Map<string, string>();
 
-  Object.defineProperty(globalThis, 'localStorage', {
+  Object.defineProperty(globalThis, "localStorage", {
     value: {
       get length() {
         return store.size;
@@ -12,8 +12,8 @@ if (!globalThis.localStorage) {
       getItem: (key: string) => store.get(key) ?? null,
       key: (index: number) => Array.from(store.keys())[index] ?? null,
       removeItem: (key: string) => store.delete(key),
-      setItem: (key: string, value: string) => store.set(key, String(value))
+      setItem: (key: string, value: string) => store.set(key, String(value)),
     },
-    configurable: true
+    configurable: true,
   });
 }

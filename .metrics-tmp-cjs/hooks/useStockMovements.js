@@ -24,30 +24,34 @@ exports.useStockMovements = void 0;
 var react_1 = require("react");
 var useBatches_1 = require("./useBatches");
 /**
- * Hook personalizado para gestionar movimientos de stock
- * REQ-F03: Registro de movimientos de stock (ingresos y egresos)
- * Actualiza automáticamente la cantidad disponible del lote
+ * Trazabilidad REQ-F03:
+ * Gestiona movimientos de stock por lote, diferenciando ingresos y egresos, y
+ * recalcula el saldo disponible despues de cada cambio.
+ *
+ * Trazabilidad REQ-F04:
+ * La validacion de egresos mayores al stock se aplica en StockMovementForm antes
+ * de invocar este hook; este modulo conserva la actualizacion del saldo.
  */
 var useStockMovements = function () {
     var _a = (0, react_1.useState)([]), movements = _a[0], setMovements = _a[1];
     var _b = (0, react_1.useState)(true), loading = _b[0], setLoading = _b[1];
     var _c = (0, useBatches_1.useBatches)(), getBatch = _c.getBatch, updateAvailableQuantity = _c.updateAvailableQuantity;
-    // Cargar movimientos del localStorage
+    // REQ-NF01: Recupera movimientos locales para ejecutar y probar sin infraestructura externa.
     (0, react_1.useEffect)(function () {
-        var stored = localStorage.getItem('stockMovements');
+        var stored = localStorage.getItem("stockMovements");
         if (stored) {
             var parsed = JSON.parse(stored);
             setMovements(parsed.map(function (m) { return (__assign(__assign({}, m), { createdAt: new Date(m.createdAt) })); }));
         }
         setLoading(false);
     }, []);
-    // Guardar en localStorage cuando cambian los movimientos
+    // REQ-NF01: Persiste el historial local de movimientos entre recargas.
     (0, react_1.useEffect)(function () {
         if (!loading) {
-            localStorage.setItem('stockMovements', JSON.stringify(movements));
+            localStorage.setItem("stockMovements", JSON.stringify(movements));
         }
     }, [movements, loading]);
-    // Calcular cantidad disponible después de todos los movimientos
+    // REQ-F03 / REQ-F05: Calcula el saldo que se muestra en consultas de lote e inventario.
     var calculateAvailableQuantity = (0, react_1.useCallback)(function (batchId) {
         var batch = getBatch(batchId);
         if (!batch)
@@ -55,11 +59,11 @@ var useStockMovements = function () {
         var totalMovement = movements
             .filter(function (m) { return m.batchId === batchId; })
             .reduce(function (sum, m) {
-            return m.type === 'ingreso' ? sum + m.quantity : sum - m.quantity;
+            return m.type === "ingreso" ? sum + m.quantity : sum - m.quantity;
         }, 0);
         return batch.initialQuantity + totalMovement;
     }, [movements, getBatch]);
-    // Agregar movimiento de stock
+    // REQ-F03: Registra ingreso o egreso y actualiza automaticamente la cantidad disponible del lote.
     var addMovement = function (batchId, data) {
         var newMovement = {
             id: Date.now().toString(),
@@ -67,40 +71,40 @@ var useStockMovements = function () {
             type: data.type,
             quantity: data.quantity,
             reason: data.reason,
-            createdAt: new Date()
+            createdAt: new Date(),
         };
         var updatedMovements = __spreadArray(__spreadArray([], movements, true), [newMovement], false);
         setMovements(updatedMovements);
-        // Calcular cantidad disponible con los movimientos actualizados
+        // REQ-F03: Recalculo inmediato para que el lote refleje el movimiento recien registrado.
         var batch = getBatch(batchId);
         if (batch) {
             var totalMovement = updatedMovements
                 .filter(function (m) { return m.batchId === batchId; })
                 .reduce(function (sum, m) {
-                return m.type === 'ingreso' ? sum + m.quantity : sum - m.quantity;
+                return m.type === "ingreso" ? sum + m.quantity : sum - m.quantity;
             }, 0);
             var newAvailable = batch.initialQuantity + totalMovement;
             updateAvailableQuantity(batchId, newAvailable);
         }
         return newMovement;
     };
-    // Eliminar movimiento
+    // REQ-F03: Al eliminar un movimiento se recompone el saldo para mantener trazabilidad historica.
     var deleteMovement = function (id, batchId) {
         var updatedMovements = movements.filter(function (m) { return m.id !== id; });
         setMovements(updatedMovements);
-        // Recalcular cantidad disponible del lote
+        // REQ-F03: Recalcula el saldo con el historial restante del lote.
         var batch = getBatch(batchId);
         if (batch) {
             var totalMovement = updatedMovements
                 .filter(function (m) { return m.batchId === batchId; })
                 .reduce(function (sum, m) {
-                return m.type === 'ingreso' ? sum + m.quantity : sum - m.quantity;
+                return m.type === "ingreso" ? sum + m.quantity : sum - m.quantity;
             }, 0);
             var newAvailable = batch.initialQuantity + totalMovement;
             updateAvailableQuantity(batchId, newAvailable);
         }
     };
-    // Obtener movimientos de un lote
+    // REQ-F03: Consulta del historial de movimientos asociado a un lote.
     var getMovementsByBatch = function (batchId) {
         return movements.filter(function (m) { return m.batchId === batchId; });
     };
@@ -110,7 +114,7 @@ var useStockMovements = function () {
         addMovement: addMovement,
         deleteMovement: deleteMovement,
         getMovementsByBatch: getMovementsByBatch,
-        calculateAvailableQuantity: calculateAvailableQuantity
+        calculateAvailableQuantity: calculateAvailableQuantity,
     };
 };
 exports.useStockMovements = useStockMovements;

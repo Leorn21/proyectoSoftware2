@@ -1,13 +1,30 @@
-import { useState, useMemo } from 'react';
-import { Boxes, PackageSearch, PlusCircle } from 'lucide-react';
-import { useProducts } from './hooks/useProducts';
-import { useBatches } from './hooks/useBatches';
-import { useStockMovements } from './hooks/useStockMovements';
-import { ProductForm, ProductList, SearchBar, ProductDetail, BatchDetail } from './components';
-import { Product, ProductFormData, BatchFormData, Batch, StockMovementFormData } from './types';
-import { Button } from './components/ui/button';
-import { Card, CardContent } from './components/ui/card';
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from './components/ui/dialog';
+import { useState, useMemo } from "react";
+import { Boxes, PackageSearch, PlusCircle } from "lucide-react";
+import { useProducts } from "./hooks/useProducts";
+import { useBatches } from "./hooks/useBatches";
+import { useStockMovements } from "./hooks/useStockMovements";
+import {
+  ProductForm,
+  ProductList,
+  SearchBar,
+  ProductDetail,
+  BatchDetail,
+} from "./components";
+import {
+  Product,
+  ProductFormData,
+  BatchFormData,
+  Batch,
+  StockMovementFormData,
+} from "./types";
+import { Button } from "./components/ui/button";
+import { Card, CardContent } from "./components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "./components/ui/dialog";
 
 /**
  * Trazabilidad REQ-NF02:
@@ -16,14 +33,36 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from './compone
  * y consulta de inventario con detalle de lotes (REQ-F05).
  */
 function App() {
-  const { products, addProduct, updateProduct, deleteProduct, searchProducts, loading: productsLoading } = useProducts();
-  const { batches, addBatch, updateBatch, deleteBatch, getBatchesByProduct, getBatch, loading: batchesLoading } = useBatches();
-  const { addMovement, deleteMovement, getMovementsByBatch, loading: movementsLoading } = useStockMovements();
-  
+  const {
+    products,
+    addProduct,
+    updateProduct,
+    deleteProduct,
+    searchProducts,
+    loading: productsLoading,
+  } = useProducts();
+  const {
+    batches,
+    addBatch,
+    updateBatch,
+    deleteBatch,
+    getBatchesByProduct,
+    getBatch,
+    loading: batchesLoading,
+  } = useBatches();
+  const {
+    addMovement,
+    deleteMovement,
+    getMovementsByBatch,
+    loading: movementsLoading,
+  } = useStockMovements();
+
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(
+    null,
+  );
   const [selectedBatchId, setSelectedBatchId] = useState<string | null>(null);
 
   const loading = productsLoading || batchesLoading || movementsLoading;
@@ -32,7 +71,7 @@ function App() {
   const getAvailableQuantity = (batch: Batch): number => {
     const batchMovements = getMovementsByBatch(batch.id);
     const totalMovement = batchMovements.reduce((sum, m) => {
-      return m.type === 'ingreso' ? sum + m.quantity : sum - m.quantity;
+      return m.type === "ingreso" ? sum + m.quantity : sum - m.quantity;
     }, 0);
     return batch.initialQuantity + totalMovement;
   };
@@ -45,9 +84,13 @@ function App() {
     return products;
   }, [products, searchQuery, searchProducts]);
 
-  const selectedProduct = selectedProductId ? products.find(p => p.id === selectedProductId) : null;
+  const selectedProduct = selectedProductId
+    ? products.find((p) => p.id === selectedProductId)
+    : null;
   // REQ-F05: Detalle de lotes asociados al producto seleccionado.
-  const selectedProductBatches = selectedProductId ? getBatchesByProduct(selectedProductId) : [];
+  const selectedProductBatches = selectedProductId
+    ? getBatchesByProduct(selectedProductId)
+    : [];
 
   const handleFormSubmit = (data: ProductFormData) => {
     // REQ-F01: Unifica alta y edicion de productos desde el formulario.
@@ -141,10 +184,15 @@ function App() {
               <h1 className="text-3xl font-bold text-slate-50">
                 Gestor de Inventario
               </h1>
-              <p className="mt-1 text-slate-400">Sistema de gestión de productos, lotes y movimientos con una interfaz renovada.</p>
+              <p className="mt-1 text-slate-400">
+                Sistema de gestión de productos, lotes y movimientos con una
+                interfaz renovada.
+              </p>
             </div>
             <div className="rounded-2xl border border-slate-800 bg-slate-900/80 px-4 py-3 text-sm text-slate-300 shadow-lg shadow-black/20">
-              <strong className="text-sky-300">{products.length}</strong> productos | <strong className="text-sky-300">{batches.length}</strong> lotes
+              <strong className="text-sky-300">{products.length}</strong>{" "}
+              productos |{" "}
+              <strong className="text-sky-300">{batches.length}</strong> lotes
             </div>
           </div>
         </div>
@@ -198,14 +246,18 @@ function App() {
                         <PackageSearch className="h-5 w-5" />
                       </div>
                       <div>
-                        <h2 className="text-xl font-semibold text-slate-50">Explorar productos</h2>
-                        <p className="text-sm text-slate-400">Buscá por código, nombre, descripción o categoría.</p>
+                        <h2 className="text-xl font-semibold text-slate-50">
+                          Explorar productos
+                        </h2>
+                        <p className="text-sm text-slate-400">
+                          Buscá por código, nombre, descripción o categoría.
+                        </p>
                       </div>
                     </div>
                     <label className="mb-2 block text-sm font-medium text-slate-300">
-                    Buscar producto
-                  </label>
-                  <SearchBar onSearch={setSearchQuery} />
+                      Buscar producto
+                    </label>
+                    <SearchBar onSearch={setSearchQuery} />
                   </div>
                   <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-5">
                     <div className="mb-4 flex items-center gap-3">
@@ -213,8 +265,12 @@ function App() {
                         <Boxes className="h-5 w-5" />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-slate-100">Panel rápido</p>
-                        <p className="text-sm text-slate-400">Creá productos y mantené el inventario al día.</p>
+                        <p className="text-sm font-semibold text-slate-100">
+                          Panel rápido
+                        </p>
+                        <p className="text-sm text-slate-400">
+                          Creá productos y mantené el inventario al día.
+                        </p>
                       </div>
                     </div>
                     {!showForm && (
@@ -222,8 +278,7 @@ function App() {
                         onClick={() => setShowForm(true)}
                         className="w-full"
                       >
-                        <PlusCircle className="h-4 w-4" />
-                        + Nuevo Producto
+                        <PlusCircle className="h-4 w-4" />+ Nuevo Producto
                       </Button>
                     )}
                   </div>
@@ -231,10 +286,13 @@ function App() {
               </Card>
             </div>
 
-            <Dialog open={showForm} onOpenChange={(open) => !open && handleFormCancel()}>
+            <Dialog
+              open={showForm}
+              onOpenChange={(open) => !open && handleFormCancel()}
+            >
               <DialogContent>
                 <DialogTitle className="sr-only">
-                  {editingProduct ? 'Editar Producto' : 'Nuevo Producto'}
+                  {editingProduct ? "Editar Producto" : "Nuevo Producto"}
                 </DialogTitle>
                 <DialogDescription className="sr-only">
                   Formulario para crear o editar productos del inventario.
@@ -242,13 +300,17 @@ function App() {
                 <ProductForm
                   onSubmit={handleFormSubmit}
                   onCancel={handleFormCancel}
-                  initialData={editingProduct ? {
-                    code: editingProduct.code,
-                    name: editingProduct.name,
-                    description: editingProduct.description,
-                    category: editingProduct.category,
-                    unit: editingProduct.unit
-                  } : undefined}
+                  initialData={
+                    editingProduct
+                      ? {
+                          code: editingProduct.code,
+                          name: editingProduct.name,
+                          description: editingProduct.description,
+                          category: editingProduct.category,
+                          unit: editingProduct.unit,
+                        }
+                      : undefined
+                  }
                   isEditing={!!editingProduct}
                 />
               </DialogContent>
@@ -257,7 +319,9 @@ function App() {
             {/* Lista de productos */}
             <section>
               <h2 className="mb-4 text-2xl font-bold text-slate-50">
-                {searchQuery ? `Resultados de búsqueda (${displayedProducts.length})` : 'Lista de Productos'}
+                {searchQuery
+                  ? `Resultados de búsqueda (${displayedProducts.length})`
+                  : "Lista de Productos"}
               </h2>
               <ProductList
                 products={displayedProducts}
@@ -274,7 +338,9 @@ function App() {
       {/* Footer */}
       <footer className="mt-12 border-t border-slate-800/80 bg-slate-950/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-sm text-slate-500">
-          <p>Sistema de Gestión de Inventario v1.0 | Cumple con REQ-F01 y REQ-F02</p>
+          <p>
+            Sistema de Gestión de Inventario v1.0 | Cumple con REQ-F01 y REQ-F02
+          </p>
         </div>
       </footer>
     </div>

@@ -1,0 +1,8 @@
+{
+  "generatedAt": "2026-06-01T23:11:21.469Z",
+  "maxCyclomaticComplexity": 10,
+  "maxCyclomaticFile": "/home/sierraecho/Descargas/proyectoSoftware2/.metrics-tmp-cjs/components/ProductForm.js",
+  "maxCyclomaticFunction": "ProductForm",
+  "averageMaintainabilityIndex": 110.6,
+  "moduleCount": 22
+}

@@ -1,0 +1,317 @@
+{
+  "project": "Sistema de Gestión de Inventario",
+  "generatedAt": "2026-06-01T23:11:22.512Z",
+  "summary": {
+    "totalCases": 22,
+    "automatedCases": 18,
+    "semiAutomatedCases": 3,
+    "manualCases": 1,
+    "approved": 21,
+    "rejected": 0,
+    "blocked": 0,
+    "notApplicable": 0
+  },
+  "qualityThresholds": {
+    "coverage": 60,
+    "maxCyclomaticComplexity": 10,
+    "minMaintainabilityIndex": 70,
+    "criticalLintErrors": 0,
+    "openCriticalDefects": 0
+  },
+  "cases": [
+    {
+      "id": "CP-01",
+      "name": "Alta correcta de producto",
+      "requirement": "REQ-F01",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El producto se registra y aparece en el listado.",
+      "actualResult": "La suite funcional registra correctamente productos válidos.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx, src/hooks/useProducts.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-02",
+      "name": "Alta de producto con campos obligatorios vacíos",
+      "requirement": "REQ-F01",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "Se bloquea el alta y se muestran errores de validación claros.",
+      "actualResult": "El sistema impide el alta y muestra los mensajes de validación esperados.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-03",
+      "name": "Edición correcta de producto",
+      "requirement": "REQ-F01",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El sistema actualiza los datos del producto y los refleja en el listado.",
+      "actualResult": "La edición de producto queda persistida en la interfaz y en el hook.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx, src/hooks/useProducts.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-04",
+      "name": "Eliminación de producto",
+      "requirement": "REQ-F01",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El sistema elimina el producto y deja de mostrarlo en el listado.",
+      "actualResult": "La eliminación por modal funciona y actualiza el listado.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-05",
+      "name": "Consulta de listado de productos",
+      "requirement": "REQ-F01",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El sistema muestra todos los productos registrados con consistencia.",
+      "actualResult": "El listado muestra múltiples productos y total visible.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-06",
+      "name": "Alta correcta de lote asociado a un producto",
+      "requirement": "REQ-F02",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El lote se registra asociado al producto con cantidad disponible inicial correcta.",
+      "actualResult": "El lote se crea y queda visible en el detalle del producto.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx, src/hooks/useBatches.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-07",
+      "name": "Alta de lote con cantidad inicial inválida",
+      "requirement": "REQ-F02",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El sistema rechaza el lote con cantidad inicial inválida.",
+      "actualResult": "La validación UI impide registrar cantidades menores o iguales a 0.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-08",
+      "name": "Registro de ingreso de stock",
+      "requirement": "REQ-F03",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El ingreso incrementa correctamente la cantidad disponible del lote.",
+      "actualResult": "Los ingresos impactan el saldo visible y persistido.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx, src/hooks/useStockMovements.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-09",
+      "name": "Registro de egreso de stock",
+      "requirement": "REQ-F03",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El egreso decrementa correctamente la cantidad disponible del lote.",
+      "actualResult": "Los egresos impactan correctamente el saldo del lote.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx, src/hooks/useStockMovements.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-10",
+      "name": "Intento de egreso mayor al stock disponible",
+      "requirement": "REQ-F04",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El sistema rechaza la operación y mantiene el stock sin cambios.",
+      "actualResult": "La validación evita el egreso inválido y no persiste el movimiento.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-11",
+      "name": "Verificación de actualización automática de cantidad disponible",
+      "requirement": "REQ-F03, REQ-F04",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El stock disponible se recalcula automáticamente luego de cada movimiento válido.",
+      "actualResult": "El disponible se actualiza luego de cada movimiento.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx, src/hooks/useStockMovements.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-12",
+      "name": "Consulta del stock total por producto",
+      "requirement": "REQ-F05",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El sistema informa el stock total sumando los lotes del producto.",
+      "actualResult": "La vista de producto calcula correctamente el stock total.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-13",
+      "name": "Consulta del detalle de lotes asociados",
+      "requirement": "REQ-F05",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El sistema muestra cada lote asociado con sus cantidades y fechas.",
+      "actualResult": "La vista de detalle muestra lotes y sus datos asociados.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx, src/components/inventory-components.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-14",
+      "name": "Prueba de trazabilidad entre producto, lote y movimiento",
+      "requirement": "REQ-F02, REQ-F03, REQ-F05",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El sistema conserva la relación entre producto, lote y movimiento.",
+      "actualResult": "Existe un escenario integrado que confirma la trazabilidad completa.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-15",
+      "name": "Validación de fecha de vencimiento cuando corresponda",
+      "requirement": "REQ-F02",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "Si se exige coherencia temporal, el sistema debe rechazar un vencimiento anterior a la fecha de ingreso e informar el error.",
+      "actualResult": "El formulario rechaza fechas de vencimiento anteriores a la fecha de ingreso y muestra el mensaje de validación correspondiente.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx, src/components/BatchForm.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-16",
+      "name": "Prueba de regresión sobre el cálculo de stock luego de varios movimientos",
+      "requirement": "REQ-F03, REQ-F04, REQ-F05",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El stock final del lote y del producto permanece correcto tras una secuencia combinada de movimientos.",
+      "actualResult": "La secuencia de movimientos mantiene el saldo final esperado.",
+      "evidence": "reports/test-output.txt",
+      "relatedTestFile": "src/App.test.tsx, src/hooks/useStockMovements.test.tsx",
+      "notes": ""
+    },
+    {
+      "id": "CP-17",
+      "name": "Validación de ejecución de ESLint sin errores críticos",
+      "requirement": "REQ-NF02",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El análisis finaliza sin errores críticos de ESLint.",
+      "actualResult": "ESLint finalizó con 0 errores críticos.",
+      "evidence": "reports/eslint-report.json",
+      "relatedTestFile": "eslint.config.js",
+      "notes": ""
+    },
+    {
+      "id": "CP-18",
+      "name": "Validación de cobertura mínima con Vitest",
+      "requirement": "REQ-NF02",
+      "executionType": "Automatizada",
+      "status": "Aprobado",
+      "expectedResult": "La cobertura supera el mínimo de 60% en statements, branches y functions.",
+      "actualResult": "Cobertura obtenida: 95.53% statements, 90.07% branches, 90.37% functions, 95.86% lines.",
+      "evidence": "coverage/coverage-summary.json",
+      "relatedTestFile": "vitest.config.ts",
+      "notes": ""
+    },
+    {
+      "id": "CP-19",
+      "name": "Validación de complejidad ciclomática máxima",
+      "requirement": "REQ-NF02",
+      "executionType": "Semi-automatizada",
+      "status": "Aprobado",
+      "expectedResult": "La complejidad ciclomática máxima del código de aplicación es menor o igual a 10.",
+      "actualResult": "Máxima detectada: 10 en ProductForm (/home/sierraecho/Descargas/proyectoSoftware2/.metrics-tmp-cjs/components/ProductForm.js).",
+      "evidence": "reports/complexity-summary.json",
+      "relatedTestFile": "scripts/collect-metrics.mjs",
+      "notes": "El análisis excluye archivos de test compilados para medir solo código de aplicación."
+    },
+    {
+      "id": "CP-20",
+      "name": "Validación de Maintainability Index",
+      "requirement": "REQ-NF02",
+      "executionType": "Semi-automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El Maintainability Index promedio del proyecto debe ser mayor o igual a 70.",
+      "actualResult": "Índice promedio detectado: 110.6.",
+      "evidence": "reports/complexity-summary.json",
+      "relatedTestFile": "scripts/collect-metrics.mjs",
+      "notes": ""
+    },
+    {
+      "id": "CP-21",
+      "name": "Revisión de README con instrucciones de instalación, ejecución y pruebas",
+      "requirement": "REQ-NF01",
+      "executionType": "Semi-automatizada",
+      "status": "Aprobado",
+      "expectedResult": "El README incluye instrucciones de instalación, ejecución y pruebas.",
+      "actualResult": "Instalación: sí, ejecución: sí, pruebas: sí.",
+      "evidence": "README.md",
+      "relatedTestFile": "README.md",
+      "notes": ""
+    },
+    {
+      "id": "CP-22",
+      "name": "Verificación de que no existan defectos críticos abiertos al cierre",
+      "requirement": "REQ-NF02",
+      "executionType": "Manual",
+      "status": "Manual",
+      "expectedResult": "No deben existir defectos críticos abiertos al cierre del plan de pruebas.",
+      "actualResult": "No hay acceso a gh ni API configurada en este entorno; la verificación queda manual.",
+      "evidence": "gh no disponible en el entorno actual",
+      "relatedTestFile": "N/A",
+      "notes": "La verificación debe completarse manualmente con el repositorio o tracker real."
+    }
+  ],
+  "qualityResults": {
+    "eslintCriticalErrors": 0,
+    "prettier": {
+      "configured": true,
+      "status": "Aprobado",
+      "details": "> gestor-inventario@1.0.0 format:check\n> prettier --check \"src/**/*.{ts,tsx,css}\" \"scripts/**/*.{js,mjs}\" \"*.{json,md,js,ts}\"\n\nChecking formatting...\nAll matched files use Prettier code style!",
+      "evidence": "reports/format-output.txt"
+    },
+    "coverage": {
+      "statements": 95.53,
+      "branches": 90.07,
+      "functions": 90.37,
+      "lines": 95.86
+    },
+    "complexity": {
+      "max": 10,
+      "file": "/home/sierraecho/Descargas/proyectoSoftware2/.metrics-tmp-cjs/components/ProductForm.js",
+      "function": "ProductForm"
+    },
+    "maintainabilityIndex": {
+      "average": 110.6
+    }
+  },
+  "externalIssueTracking": {
+    "githubCliAvailable": false,
+    "issuesFetched": false,
+    "openCriticalDefects": null,
+    "notes": "gh no está disponible en el entorno actual; la verificación queda manual."
+  },
+  "defectCandidates": []
+}

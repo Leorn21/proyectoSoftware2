@@ -23,29 +23,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.useBatches = void 0;
 var react_1 = require("react");
 /**
- * Hook personalizado para gestionar lotes
- * REQ-F02: Registro de lotes asociados a un producto
- * Utiliza localStorage para persistencia local
+ * Trazabilidad REQ-F02:
+ * Centraliza el ciclo de vida de lotes asociados a productos, incluyendo
+ * numero de lote, cantidades, fecha de ingreso y vencimiento opcional.
+ *
+ * Trazabilidad REQ-F05:
+ * Expone consultas por producto para mostrar el detalle de lotes dentro del
+ * inventario.
  */
 var useBatches = function () {
     var _a = (0, react_1.useState)([]), batches = _a[0], setBatches = _a[1];
     var _b = (0, react_1.useState)(true), loading = _b[0], setLoading = _b[1];
-    // Cargar lotes del localStorage
+    // REQ-NF01: Recupera lotes guardados localmente para ejecutar la app sin backend.
     (0, react_1.useEffect)(function () {
-        var stored = localStorage.getItem('batches');
+        var stored = localStorage.getItem("batches");
         if (stored) {
             var parsed = JSON.parse(stored);
             setBatches(parsed.map(function (b) { return (__assign(__assign({}, b), { entryDate: new Date(b.entryDate), expiryDate: b.expiryDate ? new Date(b.expiryDate) : null, createdAt: new Date(b.createdAt) })); }));
         }
         setLoading(false);
     }, []);
-    // Guardar en localStorage cuando cambian los lotes
+    // REQ-NF01: Mantiene persistencia local de lotes para pruebas de usuario.
     (0, react_1.useEffect)(function () {
         if (!loading) {
-            localStorage.setItem('batches', JSON.stringify(batches));
+            localStorage.setItem("batches", JSON.stringify(batches));
         }
     }, [batches, loading]);
-    // Agregar nuevo lote
+    // REQ-F02: Registra un lote vinculado a un producto con cantidad inicial y vencimiento opcional.
     var addBatch = function (productId, data) {
         var newBatch = {
             id: Date.now().toString(),
@@ -55,31 +59,31 @@ var useBatches = function () {
             availableQuantity: data.initialQuantity,
             entryDate: new Date(),
             expiryDate: data.expiryDate ? new Date(data.expiryDate) : null,
-            createdAt: new Date()
+            createdAt: new Date(),
         };
         setBatches(__spreadArray(__spreadArray([], batches, true), [newBatch], false));
         return newBatch;
     };
-    // Actualizar lote
+    // REQ-F02: Edita los datos de identificacion y vencimiento del lote.
     var updateBatch = function (id, data) {
         setBatches(batches.map(function (b) {
             return b.id === id
                 ? __assign(__assign({}, b), { batchNumber: data.batchNumber, expiryDate: data.expiryDate ? new Date(data.expiryDate) : null }) : b;
         }));
     };
-    // Eliminar lote
+    // REQ-F02: Elimina un lote asociado cuando deja de formar parte del inventario.
     var deleteBatch = function (id) {
         setBatches(batches.filter(function (b) { return b.id !== id; }));
     };
-    // Obtener lotes de un producto
+    // REQ-F05: Obtiene el detalle de lotes asociado a un producto listado.
     var getBatchesByProduct = function (productId) {
         return batches.filter(function (b) { return b.productId === productId; });
     };
-    // Obtener un lote específico
+    // REQ-F02: Consulta puntual de un lote para visualizar o actualizar su detalle.
     var getBatch = function (id) {
         return batches.find(function (b) { return b.id === id; });
     };
-    // Actualizar cantidad disponible del lote (para movimientos de stock)
+    // REQ-F03: Sincroniza el saldo disponible luego de registrar movimientos de stock.
     var updateAvailableQuantity = function (batchId, newQuantity) {
         setBatches(batches.map(function (b) {
             return b.id === batchId ? __assign(__assign({}, b), { availableQuantity: newQuantity }) : b;
@@ -93,7 +97,7 @@ var useBatches = function () {
         deleteBatch: deleteBatch,
         getBatchesByProduct: getBatchesByProduct,
         getBatch: getBatch,
-        updateAvailableQuantity: updateAvailableQuantity
+        updateAvailableQuantity: updateAvailableQuantity,
     };
 };
 exports.useBatches = useBatches;

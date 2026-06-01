@@ -5,6 +5,7 @@ Sistema de gestión de inventario desarrollado con React, TypeScript y Tailwind 
 ## 🎯 Funcionalidades Implementadas
 
 ### REQ-F01: Gestión de Productos
+
 - ✅ **Registrar productos**: Formulario para crear nuevos productos con código, nombre, descripción, categoría y unidad de medida
 - ✅ **Editar productos**: Modificar información de productos existentes
 - ✅ **Consultar productos**: Listar todos los productos con tabla interactiva
@@ -12,6 +13,7 @@ Sistema de gestión de inventario desarrollado con React, TypeScript y Tailwind 
 - ✅ **Eliminar productos**: Eliminar productos con confirmación
 
 ### REQ-F02: Gestión de Lotes
+
 - ✅ **Registrar lotes**: Crear lotes asociados a un producto con número, cantidad inicial y fecha de vencimiento
 - ✅ **Editar lotes**: Modificar información de lotes existentes
 - ✅ **Consultar lotes**: Listar todos los lotes de un producto
@@ -20,13 +22,16 @@ Sistema de gestión de inventario desarrollado con React, TypeScript y Tailwind 
 - ✅ **Vencimiento**: Indicador visual de lotes vencidos
 
 ### REQ-F03: Movimientos de Stock
+
 - ✅ **Registrar ingresos y egresos**: Movimientos sobre un lote
 - ✅ **Actualización automática**: Recalcula cantidad disponible del lote
 
 ### REQ-F04: Validación de Stock
+
 - ✅ **Bloqueo de egresos inválidos**: No permite egresos mayores al stock disponible
 
 ### REQ-F05: Consulta de Inventario
+
 - ✅ **Stock total por producto**: Suma disponible de todos los lotes
 - ✅ **Detalle de lotes**: Acceso al detalle y movimientos de cada lote
 
@@ -46,16 +51,19 @@ Sistema de gestión de inventario desarrollado con React, TypeScript y Tailwind 
 ## 🚀 Instalación y Ejecución
 
 ### 1. Clonar o descargar el proyecto
+
 ```bash
 cd GestorDeInventario
 ```
 
 ### 2. Instalar dependencias
+
 ```bash
 npm install
 ```
 
 ### 3. Ejecutar en modo desarrollo
+
 ```bash
 npm run dev
 ```
@@ -63,6 +71,7 @@ npm run dev
 La aplicación se abrirá automáticamente en `http://localhost:3000`
 
 ### 4. Compilar para producción
+
 ```bash
 npm run build
 ```
@@ -99,6 +108,7 @@ package.json            # Dependencias del proyecto
 ## 🧪 Pruebas Manuales
 
 ### Crear un Producto
+
 1. Haz clic en "+ Nuevo Producto"
 2. Completa los campos requeridos:
    - Código: `HERR-001`
@@ -109,6 +119,7 @@ package.json            # Dependencias del proyecto
 3. Haz clic en "Crear Producto"
 
 ### Agregar Lotes a un Producto
+
 1. En la tabla de productos, haz clic en el botón "Lotes" del producto
 2. Se abre la vista de detalle del producto
 3. Haz clic en "+ Nuevo Lote"
@@ -119,16 +130,19 @@ package.json            # Dependencias del proyecto
 5. Haz clic en "Registrar Lote"
 
 ### Editar un Lote
+
 1. En la vista de detalle del producto, busca el lote en la tabla
 2. Haz clic en "Editar"
 3. Modifica los campos deseados
 4. Haz clic en "Guardar Cambios"
 
 ### Buscar un Producto
+
 1. Usa la barra de búsqueda en la lista de productos
 2. Ingresa texto para buscar por código, nombre, descripción o categoría
 
 ### Eliminar un Producto o Lote
+
 1. Busca el elemento en la tabla
 2. Haz clic en "Eliminar"
 3. Confirma la eliminación
@@ -136,27 +150,38 @@ package.json            # Dependencias del proyecto
 ## ✅ Tests de Código Estático
 
 ### Linter (ESLint)
+
 Ejecuta el linter sobre el código TypeScript/React:
 
 ```bash
-npx eslint "src/**/*.{ts,tsx}"
+npm run lint
 ```
 
 ### Métricas de complejidad y mantenibilidad
+
 Genera reporte con complejidad ciclomática (CC) e índice de mantenibilidad (MI):
 
 ```bash
-npx escomplex -o escomplex-report.json src
+npm run metrics
+```
+
+### Cobertura y resumen consolidado
+
+```bash
+npm run test:coverage
+npm run quality
 ```
 
 ## 💾 Almacenamiento de Datos
 
 Los datos se almacenan en `localStorage` del navegador:
+
 - `products`: Array de productos
 - `batches`: Array de lotes
 - `stockMovements`: Array de movimientos de stock
 
 Ventajas:
+
 - ✅ Los datos persisten entre sesiones
 - ✅ No requiere un servidor backend
 - ✅ Perfecto para desarrollo local y pruebas
@@ -166,17 +191,20 @@ Ventajas:
 ## 🔒 Validaciones Implementadas
 
 ### Productos
+
 - Código, nombre, descripción, categoría y unidad son requeridos
 - Mensajes de error claros para campos inválidos
 - Confirmación antes de eliminar
 
 ### Lotes
+
 - Número de lote requerido
 - Cantidad inicial debe ser mayor a 0
 - Fecha de vencimiento es opcional
 - Indicador visual para lotes vencidos
 
 ### Movimientos de Stock
+
 - Cantidad debe ser mayor a 0
 - Egresos no pueden superar el stock disponible
 
@@ -209,6 +237,7 @@ Cada componente y hook incluye comentarios referenciando los requisitos funciona
 ## 📚 Documentación del Código
 
 El código está documentado siguiendo el requisito REQ-NF02:
+
 - Comentarios JSDoc en funciones principales
 - Nombres descriptivos para variables y funciones
 - Estructura modular y escalable
@@ -225,6 +254,7 @@ El código está documentado siguiendo el requisito REQ-NF02:
 ## 📞 Soporte
 
 Para reportar problemas o sugerencias, contacta a los integrantes del proyecto:
+
 - Leonel Ruiz Notari
 - Matías Harón
 - Ezequiel Signorini
