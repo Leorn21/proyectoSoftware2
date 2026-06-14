@@ -339,7 +339,7 @@ function App() {
       <footer className="mt-12 border-t border-slate-800/80 bg-slate-950/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-sm text-slate-500">
           <p>
-            Sistema de Gestión de Inventario v1.0 | Cumple con REQ-F01 y REQ-F02
+            Sistema de Gestion de Inventario v1.0 | Cumple con REQ-F01 a REQ-F05
           </p>
         </div>
       </footer>

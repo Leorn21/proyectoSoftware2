@@ -147,6 +147,26 @@ describe("useStockMovements", () => {
     expect(localStorage.getItem("stockMovements")).toContain("Venta");
   });
 
+  test("REQ-F04 rechaza egresos mayores al stock disponible desde la logica de negocio", () => {
+    getBatchMock.mockReturnValue({
+      id: "batch-1",
+      initialQuantity: 10,
+    });
+    const { result } = renderHook(() => useStockMovements());
+
+    expect(() => {
+      act(() => {
+        result.current.addMovement("batch-1", {
+          type: "egreso",
+          quantity: 11,
+          reason: "Venta invalida",
+        });
+      });
+    }).toThrow(/REQ-F04/);
+    expect(result.current.movements).toHaveLength(0);
+    expect(updateAvailableQuantityMock).not.toHaveBeenCalled();
+  });
+
   test("REQ-F03 agrega y elimina movimientos aunque el lote no exista", () => {
     getBatchMock.mockReturnValue(undefined);
     const { result } = renderHook(() => useStockMovements());

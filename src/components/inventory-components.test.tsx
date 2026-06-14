@@ -213,10 +213,10 @@ describe("BatchList", () => {
     expect(within(row).getByText("0 piezas")).toHaveClass("bg-rose-500/15");
 
     const dateCell = within(row).getByText((_content, element) => {
-      return (
+      return Boolean(
         element?.tagName.toLowerCase() === "span" &&
-        element.className === "text-slate-300" &&
-        !!element.textContent?.includes("2999")
+          element.className === "text-slate-300" &&
+          element.textContent?.includes("2999"),
       );
     });
     expect(dateCell).not.toHaveClass("text-rose-400");

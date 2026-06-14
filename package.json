@@ -16,11 +16,11 @@
     "quality": "mkdir -p reports; npm test > reports/test-output.txt 2>&1; echo $? > reports/test-exit-code.txt; npm run test:coverage > reports/coverage-output.txt 2>&1; echo $? > reports/coverage-exit-code.txt; npm run lint:report > reports/lint-output.txt 2>&1; echo $? > reports/lint-exit-code.txt; npm run metrics > reports/metrics-output.txt 2>&1; echo $? > reports/metrics-exit-code.txt; npm run format:check > reports/format-output.txt 2>&1; echo $? > reports/format-exit-code.txt; node ./scripts/generate-test-execution-summary.mjs"
   },
   "dependencies": {
-    "@radix-ui/react-alert-dialog": "^1.1.15",
-    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-alert-dialog": "^1.1.16",
+    "@radix-ui/react-dialog": "^1.1.16",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^1.17.0",
+    "lucide-react": "^1.18.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^3.6.0"

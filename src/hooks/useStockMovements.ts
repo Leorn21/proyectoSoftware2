@@ -12,8 +12,8 @@ import { useBatches } from "./useBatches";
  * recalcula el saldo disponible despues de cada cambio.
  *
  * Trazabilidad REQ-F04:
- * La validacion de egresos mayores al stock se aplica en StockMovementForm antes
- * de invocar este hook; este modulo conserva la actualizacion del saldo.
+ * La validacion de egresos mayores al stock se aplica en StockMovementForm y se
+ * refuerza aqui para proteger la regla de negocio ante invocaciones directas.
  */
 export const useStockMovements = () => {
   const [movements, setMovements] = useState<StockMovement[]>([]);
@@ -64,6 +64,17 @@ export const useStockMovements = () => {
     batchId: string,
     data: StockMovementFormData,
   ): StockMovement => {
+    const batch = getBatch(batchId);
+
+    if (batch && data.type === "egreso") {
+      const currentAvailable = calculateAvailableQuantity(batchId);
+      if (data.quantity > currentAvailable) {
+        throw new Error(
+          "REQ-F04: El egreso no puede superar el stock disponible del lote.",
+        );
+      }
+    }
+
     const newMovement: StockMovement = {
       id: Date.now().toString(),
       batchId,
@@ -77,7 +88,6 @@ export const useStockMovements = () => {
     setMovements(updatedMovements);
 
     // REQ-F03: Recalculo inmediato para que el lote refleje el movimiento recien registrado.
-    const batch = getBatch(batchId);
     if (batch) {
       const totalMovement = updatedMovements
         .filter((m) => m.batchId === batchId)

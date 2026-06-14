@@ -1,267 +1,91 @@
-# 📦 Gestor de Inventario
+# Sistema de Gestion de Inventario
 
-Sistema de gestión de inventario desarrollado con React, TypeScript y Tailwind CSS. Implementa las funcionalidades REQ-F01 a REQ-F05 del proyecto: productos, lotes, movimientos de stock, validaciones y consulta de inventario.
+Proyecto React + TypeScript para el Hito 5 de Ingenieria de Software II. Cubre productos, lotes, movimientos de stock, validacion de egresos e inventario consultable con trazabilidad entre requisitos, codigo y pruebas.
 
-## 🎯 Funcionalidades Implementadas
+## Alcance funcional
 
-### REQ-F01: Gestión de Productos
+| Requisito | Estado | Evidencia principal |
+| --- | --- | --- |
+| REQ-F01 CRUD de productos | Implementado | `src/hooks/useProducts.ts`, `src/components/ProductForm.tsx`, `src/components/ProductList.tsx`, `src/App.test.tsx` |
+| REQ-F02 Gestion de lotes por producto | Implementado | `src/hooks/useBatches.ts`, `src/components/BatchForm.tsx`, `src/components/BatchList.tsx` |
+| REQ-F03 Movimientos de stock | Implementado | `src/hooks/useStockMovements.ts`, `src/components/StockMovementForm.tsx`, `src/components/StockMovementList.tsx` |
+| REQ-F04 Bloqueo de egresos mayores al stock | Implementado | Validacion en `StockMovementForm` y refuerzo en `useStockMovements` |
+| REQ-F05 Consulta de inventario | Implementado | `ProductList`, `ProductDetail`, `BatchDetail`, calculo de stock por lote y total |
+| REQ-NF01 README ejecutable | Implementado | Este documento y scripts npm |
+| REQ-NF02 Trazabilidad | Implementado | Comentarios `REQ-Fxx`, tests nombrados por requisito y `RTM.md` |
 
-- ✅ **Registrar productos**: Formulario para crear nuevos productos con código, nombre, descripción, categoría y unidad de medida
-- ✅ **Editar productos**: Modificar información de productos existentes
-- ✅ **Consultar productos**: Listar todos los productos con tabla interactiva
-- ✅ **Buscar productos**: Buscar por código, nombre, descripción o categoría
-- ✅ **Eliminar productos**: Eliminar productos con confirmación
+## Stack
 
-### REQ-F02: Gestión de Lotes
+- Frontend: React 18, TypeScript, Vite.
+- Estilos: Tailwind CSS.
+- Tests: Vitest + Testing Library + jsdom.
+- Persistencia ejecutable actual: `localStorage`, para permitir demo local sin infraestructura.
+- PostgreSQL: se incluye `database/schema.sql` como modelo de datos objetivo. No hay backend/API conectado en esta version; ver riesgos en `MetricasFinales.md`.
 
-- ✅ **Registrar lotes**: Crear lotes asociados a un producto con número, cantidad inicial y fecha de vencimiento
-- ✅ **Editar lotes**: Modificar información de lotes existentes
-- ✅ **Consultar lotes**: Listar todos los lotes de un producto
-- ✅ **Eliminar lotes**: Eliminar lotes con confirmación
-- ✅ **Stock disponible**: Mostrar cantidad disponible por lote
-- ✅ **Vencimiento**: Indicador visual de lotes vencidos
+## Requisitos previos
 
-### REQ-F03: Movimientos de Stock
+- Node.js 18 o superior.
+- npm.
 
-- ✅ **Registrar ingresos y egresos**: Movimientos sobre un lote
-- ✅ **Actualización automática**: Recalcula cantidad disponible del lote
-
-### REQ-F04: Validación de Stock
-
-- ✅ **Bloqueo de egresos inválidos**: No permite egresos mayores al stock disponible
-
-### REQ-F05: Consulta de Inventario
-
-- ✅ **Stock total por producto**: Suma disponible de todos los lotes
-- ✅ **Detalle de lotes**: Acceso al detalle y movimientos de cada lote
-
-## 🛠️ Stack Tecnológico
-
-- **Lenguaje**: TypeScript
-- **Framework**: React 18
-- **Estilos**: Tailwind CSS
-- **Build Tool**: Vite
-- **Almacenamiento**: localStorage (local)
-
-## 📋 Requisitos Previos
-
-- Node.js (v16 o superior)
-- npm o yarn
-
-## 🚀 Instalación y Ejecución
-
-### 1. Clonar o descargar el proyecto
-
-```bash
-cd GestorDeInventario
-```
-
-### 2. Instalar dependencias
+## Instalacion y ejecucion
 
 ```bash
 npm install
-```
-
-### 3. Ejecutar en modo desarrollo
-
-```bash
 npm run dev
 ```
 
-La aplicación se abrirá automáticamente en `http://localhost:3000`
+Vite informa la URL local disponible, normalmente `http://localhost:5173`.
 
-### 4. Compilar para producción
+## Comandos de calidad
 
 ```bash
 npm run build
-```
-
-## 📁 Estructura del Proyecto
-
-```
-src/
-├── components/          # Componentes React
-│   ├── ProductForm.tsx     # Formulario para crear/editar productos
-│   ├── ProductList.tsx     # Tabla de listado de productos
-│   ├── ProductDetail.tsx   # Detalle del producto con lotes
-│   ├── SearchBar.tsx       # Barra de búsqueda
-│   ├── BatchForm.tsx       # Formulario para crear/editar lotes
-│   ├── BatchList.tsx       # Tabla de listado de lotes
-│   └── index.ts            # Exportaciones centrales
-├── hooks/               # Hooks personalizados
-│   ├── useProducts.ts      # Hook para gestionar productos
-│   └── useBatches.ts       # Hook para gestionar lotes
-├── types/               # Tipos TypeScript
-│   └── index.ts            # Interfaces Product, Batch, etc.
-├── App.tsx              # Componente principal
-├── main.tsx             # Punto de entrada
-└── index.css            # Estilos globales con Tailwind
-
-index.html              # HTML principal
-vite.config.ts          # Configuración de Vite
-tailwind.config.js      # Configuración de Tailwind CSS
-postcss.config.js       # Configuración de PostCSS
-tsconfig.json           # Configuración de TypeScript
-package.json            # Dependencias del proyecto
-```
-
-## 🧪 Pruebas Manuales
-
-### Crear un Producto
-
-1. Haz clic en "+ Nuevo Producto"
-2. Completa los campos requeridos:
-   - Código: `HERR-001`
-   - Nombre: `Martillo de Acero`
-   - Descripción: `Martillo de acero forjado para uso general`
-   - Categoría: `Herramientas`
-   - Unidad: `piezas`
-3. Haz clic en "Crear Producto"
-
-### Agregar Lotes a un Producto
-
-1. En la tabla de productos, haz clic en el botón "Lotes" del producto
-2. Se abre la vista de detalle del producto
-3. Haz clic en "+ Nuevo Lote"
-4. Completa los campos:
-   - Número de Lote: `LOTE-2024-001`
-   - Cantidad Inicial: `100`
-   - Fecha de Vencimiento: `2025-12-31` (opcional)
-5. Haz clic en "Registrar Lote"
-
-### Editar un Lote
-
-1. En la vista de detalle del producto, busca el lote en la tabla
-2. Haz clic en "Editar"
-3. Modifica los campos deseados
-4. Haz clic en "Guardar Cambios"
-
-### Buscar un Producto
-
-1. Usa la barra de búsqueda en la lista de productos
-2. Ingresa texto para buscar por código, nombre, descripción o categoría
-
-### Eliminar un Producto o Lote
-
-1. Busca el elemento en la tabla
-2. Haz clic en "Eliminar"
-3. Confirma la eliminación
-
-## ✅ Tests de Código Estático
-
-### Linter (ESLint)
-
-Ejecuta el linter sobre el código TypeScript/React:
-
-```bash
-npm run lint
-```
-
-### Métricas de complejidad y mantenibilidad
-
-Genera reporte con complejidad ciclomática (CC) e índice de mantenibilidad (MI):
-
-```bash
-npm run metrics
-```
-
-### Cobertura y resumen consolidado
-
-```bash
+npm test
 npm run test:coverage
-npm run quality
 ```
 
-## 💾 Almacenamiento de Datos
+El build ejecuta TypeScript y compila la app. Los tests cubren los flujos funcionales y unitarios por requisito.
 
-Los datos se almacenan en `localStorage` del navegador:
+## Estructura
 
-- `products`: Array de productos
-- `batches`: Array de lotes
-- `stockMovements`: Array de movimientos de stock
+```text
+src/
+  App.tsx
+  components/
+  hooks/
+  lib/
+  test/
+  types/
+database/
+  schema.sql
+CatalogoRequerimientos.md
+RTM.md
+PlanSQA_Final.md
+PlanPruebas_Final.md
+MetricasFinales.md
+ReflexionFinal.md
+GuionDefensa.md
+```
 
-Ventajas:
+## Flujos manuales sugeridos
 
-- ✅ Los datos persisten entre sesiones
-- ✅ No requiere un servidor backend
-- ✅ Perfecto para desarrollo local y pruebas
-- ⚠️ Los datos se pierden si se borra el almacenamiento del navegador
-- ⚠️ Limitado a ~5-10MB de almacenamiento
+1. Crear un producto con codigo, nombre, descripcion, categoria y unidad.
+2. Abrir el detalle del producto y crear uno o mas lotes.
+3. Abrir movimientos de un lote y registrar ingresos y egresos.
+4. Intentar registrar un egreso mayor al disponible y verificar el bloqueo.
+5. Volver al inventario y validar stock total y detalle de lotes.
 
-## 🔒 Validaciones Implementadas
+## Trazabilidad
 
-### Productos
+La trazabilidad completa esta en `RTM.md`. En codigo y tests se usan etiquetas `REQ-F01` a `REQ-F05` y `REQ-NF01` a `REQ-NF02` para vincular comportamiento, pruebas y documentacion.
 
-- Código, nombre, descripción, categoría y unidad son requeridos
-- Mensajes de error claros para campos inválidos
-- Confirmación antes de eliminar
+## Documentacion final
 
-### Lotes
-
-- Número de lote requerido
-- Cantidad inicial debe ser mayor a 0
-- Fecha de vencimiento es opcional
-- Indicador visual para lotes vencidos
-
-### Movimientos de Stock
-
-- Cantidad debe ser mayor a 0
-- Egresos no pueden superar el stock disponible
-
-## 📝 Referencias a Requisitos
-
-Cada componente y hook incluye comentarios referenciando los requisitos funcionales:
-
-- **ProductForm.tsx**: REQ-F01 (Registro y edición)
-- **ProductList.tsx**: REQ-F01 y REQ-F02 (Consulta y acceso a lotes)
-- **SearchBar.tsx**: REQ-F01 (Consulta con búsqueda)
-- **BatchForm.tsx**: REQ-F02 (Registro y edición de lotes)
-- **BatchList.tsx**: REQ-F02 (Consulta de lotes)
-- **ProductDetail.tsx**: REQ-F02 y REQ-F05 (Gestión de lotes y stock total)
-- **useProducts.ts**: REQ-F01 (Gestión de productos)
-- **useBatches.ts**: REQ-F02 (Gestión de lotes)
-- **StockMovementForm.tsx**: REQ-F03 y REQ-F04 (Movimientos y validaciones)
-- **StockMovementList.tsx**: REQ-F03 (Consulta de movimientos)
-- **BatchDetail.tsx**: REQ-F03 (Detalle de movimientos)
-- **useStockMovements.ts**: REQ-F03 (Gestión de movimientos)
-
-## 🎨 Interfaz de Usuario
-
-- Diseño responsivo (mobile-first)
-- Colores intuitivos con Tailwind CSS
-- Tablas interactivas con hover effects
-- Formularios con validación en tiempo real
-- Indicadores visuales claros (badges de categoría, stock disponible)
-- Navegación simple entre productos y lotes
-
-## 📚 Documentación del Código
-
-El código está documentado siguiendo el requisito REQ-NF02:
-
-- Comentarios JSDoc en funciones principales
-- Nombres descriptivos para variables y funciones
-- Estructura modular y escalable
-- Separación de concerns (componentes, hooks, tipos)
-- Fácil de testear
-
-## 🚀 Próximas Funcionalidades (Futuro)
-
-- Reportes de inventario avanzados
-- Backend con base de datos PostgreSQL
-- Autenticación de usuarios
-- Exportación a PDF/Excel
-
-## 📞 Soporte
-
-Para reportar problemas o sugerencias, contacta a los integrantes del proyecto:
-
-- Leonel Ruiz Notari
-- Matías Harón
-- Ezequiel Signorini
-
----
-
-**Versión**: 1.1.0  
-**Estado**: En desarrollo  
-**Última actualización**: Mayo 2026  
-**Funcionalidades completadas**: REQ-F01, REQ-F02
+- `CatalogoRequerimientos.md`: catalogo de requisitos funcionales y no funcionales.
+- `RTM.md`: matriz requisito -> codigo -> test -> estado.
+- `PlanSQA_Final.md`: estrategia final de aseguramiento de calidad.
+- `PlanPruebas_Final.md`: alcance, casos y criterios de prueba.
+- `MetricasFinales.md`: LOC, complejidad, mantenibilidad, cobertura y riesgos.
+- `ReflexionFinal.md`: reflexion de cierre del equipo.
+- `GuionDefensa.md`: guion breve para defensa oral.
+- `Wireframes_AltaFidelidad.md`: propuesta de 3 wireframes y 2 pantallas hi-fi.
