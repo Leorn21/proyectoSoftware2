@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" font-family="Segoe UI, system-ui, -apple-system, sans-serif">
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" font-family="Segoe UI, system-ui, -apple-system, sans-serif">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#020617"/>
@@ -20,7 +20,7 @@
   <text x="32" y="40" fill="#f8fafc" font-size="18" font-weight="bold">Gestor de Inventario</text>
 
   <!-- Back button -->
-  <text x="40" y="102" fill="#7dd3fc" font-size="13" font-weight="bold">&larr; Volver</text>
+  <text x="40" y="102" fill="#7dd3fc" font-size="13" font-weight="bold">← Volver</text>
 
   <!-- Title row -->
   <text x="40" y="140" fill="#f1f5f9" font-size="24" font-weight="bold">Lote LOTE-A</text>
@@ -56,7 +56,7 @@
   <line x1="40" y1="320" x2="860" y2="320" stroke="#1e293b" stroke-width="1"/>
   <text x="56" y="340" fill="#64748b" font-size="10" font-weight="bold" letter-spacing="2">TIPO</text>
   <text x="180" y="340" fill="#64748b" font-size="10" font-weight="bold" letter-spacing="2">CANTIDAD</text>
-  <text x="320" y="340" fill="#64748b" font-size="10" font-weight="bold" letter-spacing="2">RAZ&Oacute;N</text>
+  <text x="320" y="340" fill="#64748b" font-size="10" font-weight="bold" letter-spacing="2">RAZÓN</text>
   <text x="520" y="340" fill="#64748b" font-size="10" font-weight="bold" letter-spacing="2">FECHA</text>
   <text x="700" y="340" fill="#64748b" font-size="10" font-weight="bold" letter-spacing="2">ACCIONES</text>
 
@@ -66,7 +66,7 @@
   <rect x="56" y="364" width="80" height="24" rx="12" fill="#166534" fill-opacity="0.3"/>
   <text x="66" y="381" fill="#4ade80" font-size="11" font-weight="bold">+ Ingreso</text>
   <text x="180" y="381" fill="#e2e8f0" font-size="13" font-weight="bold">50 piezas</text>
-  <text x="320" y="381" fill="#94a3b8" font-size="13">Reposici&oacute;n de inventario</text>
+  <text x="320" y="381" fill="#94a3b8" font-size="13">Reposición de inventario</text>
   <text x="520" y="381" fill="#64748b" font-size="12">01/06/2026 10:30</text>
   <rect x="740" y="364" width="56" height="24" rx="6" fill="#7f1d1d" fill-opacity="0.4"/>
   <text x="750" y="381" fill="#fca5a5" font-size="10">Eliminar</text>
@@ -86,7 +86,7 @@
   <rect x="56" y="460" width="80" height="24" rx="12" fill="#166534" fill-opacity="0.3"/>
   <text x="66" y="477" fill="#4ade80" font-size="11" font-weight="bold">+ Ingreso</text>
   <text x="180" y="477" fill="#e2e8f0" font-size="13" font-weight="bold">20 piezas</text>
-  <text x="320" y="477" fill="#94a3b8" font-size="13">Devoluci&oacute;n</text>
+  <text x="320" y="477" fill="#94a3b8" font-size="13">Devolución</text>
   <text x="520" y="477" fill="#64748b" font-size="12">02/06/2026 09:00</text>
 
   <!-- Empty state note -->
@@ -115,9 +115,9 @@
   <rect x="452" y="270" width="120" height="36" rx="8" fill="#020617" stroke="#334155" stroke-width="1"/>
   <text x="466" y="294" fill="#e2e8f0" font-size="12">10</text>
 
-  <text x="276" y="326" fill="#94a3b8" font-size="11">Raz&oacute;n (opcional)</text>
+  <text x="276" y="326" fill="#94a3b8" font-size="11">Razón (opcional)</text>
   <rect x="276" y="334" width="348" height="36" rx="8" fill="#020617" stroke="#334155" stroke-width="1"/>
-  <text x="290" y="358" fill="#475569" font-size="12">Ej: Devoluci&oacute;n, Uso, Merma, etc.</text>
+  <text x="290" y="358" fill="#475569" font-size="12">Ej: Devolución, Uso, Merma, etc.</text>
 
   <!-- Stock info -->
   <rect x="276" y="386" width="348" height="36" rx="10" fill="#0ea5e9" fill-opacity="0.1"/>
