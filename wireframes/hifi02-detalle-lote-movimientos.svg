@@ -50,7 +50,7 @@
   <!-- Section header -->
   <text x="56" y="296" fill="#f1f5f9" font-size="16" font-weight="bold">Movimientos de Stock (3)</text>
   <rect x="720" y="280" width="124" height="28" rx="8" fill="#0284c7"/>
-  <text x="732" y="300" fill="#ffffff" font-size="11" font-weight="bold">+ Nuevo Movimiento</text>
+  <text x="782" y="300" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">+ Nuevo Movimiento</text>
 
   <!-- Table header -->
   <line x1="40" y1="320" x2="860" y2="320" stroke="#1e293b" stroke-width="1"/>
@@ -125,9 +125,9 @@
 
   <!-- Buttons -->
   <rect x="276" y="438" width="160" height="36" rx="8" fill="#0284c7"/>
-  <text x="320" y="462" fill="#ffffff" font-size="12" font-weight="bold">Registrar Movimiento</text>
+  <text x="356" y="462" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Registrar Movimiento</text>
   <rect x="448" y="438" width="100" height="36" rx="8" fill="none" stroke="#334155" stroke-width="1"/>
-  <text x="482" y="462" fill="#94a3b8" font-size="12">Cancelar</text>
+  <text x="498" y="462" fill="#94a3b8" font-size="12" text-anchor="middle">Cancelar</text>
 
   <!-- Label -->
   <text x="40" y="640" fill="#1e293b" font-size="9" font-weight="bold" letter-spacing="2">ALTA FIDELIDAD 2</text>

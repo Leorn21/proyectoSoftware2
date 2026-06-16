@@ -5,8 +5,8 @@
   <rect x="32" y="88" width="736" height="72" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
   <rect x="48" y="104" width="440" height="36" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
   <text x="60" y="128" fill="#94a3b8" font-size="13">Buscar por código, nombre, categoría...</text>
-  <rect x="640" y="104" width="112" height="36" rx="6" fill="#0ea5e9"/>
-  <text x="660" y="128" fill="#ffffff" font-size="13" font-weight="bold">+ Nuevo Producto</text>
+  <rect x="636" y="104" width="120" height="36" rx="6" fill="#0ea5e9"/>
+  <text x="696" y="128" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">+ Nuevo Producto</text>
   <rect x="32" y="176" width="736" height="40" rx="6" fill="#e2e8f0"/>
   <text x="48" y="202" fill="#475569" font-size="12" font-weight="bold">CÓDIGO</text>
   <text x="168" y="202" fill="#475569" font-size="12" font-weight="bold">NOMBRE</text>

@@ -49,8 +49,7 @@
   <text x="670" y="138" fill="#f1f5f9" font-size="12" font-weight="bold">Panel rápido</text>
   <text x="670" y="152" fill="#64748b" font-size="10">Creá productos y mantené el inventario al día.</text>
   <rect x="606" y="164" width="220" height="26" rx="8" fill="#0284c7"/>
-  <text x="670" y="182" fill="#ffffff" font-size="11" font-weight="bold">+ Nuevo Producto</text>
-  <text x="656" y="182" fill="#ffffff" font-size="11">+</text>
+  <text x="716" y="182" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">+ Nuevo Producto</text>
 
   <!-- Section title -->
   <text x="40" y="236" fill="#f1f5f9" font-size="18" font-weight="bold">Lista de Productos</text>

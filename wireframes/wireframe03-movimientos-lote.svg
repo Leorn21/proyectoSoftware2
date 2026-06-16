@@ -33,7 +33,7 @@
   <!-- Section title + New movement button -->
   <text x="32" y="268" fill="#0f172a" font-size="18" font-weight="bold">Movimientos de Stock (3)</text>
   <rect x="620" y="252" width="148" height="32" rx="6" fill="#0ea5e9"/>
-  <text x="632" y="273" fill="#ffffff" font-size="12" font-weight="bold">+ Nuevo Movimiento</text>
+  <text x="694" y="273" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">+ Nuevo Movimiento</text>
 
   <!-- Movements table header -->
   <rect x="32" y="288" width="736" height="36" rx="6" fill="#e2e8f0"/>
