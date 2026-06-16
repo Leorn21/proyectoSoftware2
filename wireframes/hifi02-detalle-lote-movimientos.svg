@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" font-family="Segoe UI, system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="48%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(56,189,248,0.18)"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="660" fill="url(#bg)"/>
+  <ellipse cx="450" cy="0" rx="500" ry="180" fill="url(#glow)"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="900" height="64" fill="#0f172a" fill-opacity="0.7" stroke="#1e293b" stroke-width="1"/>
+  <text x="32" y="40" fill="#f8fafc" font-size="18" font-weight="bold">Gestor de Inventario</text>
+
+  <!-- Back button -->
+  <text x="40" y="102" fill="#7dd3fc" font-size="13" font-weight="bold">&larr; Volver</text>
+
+  <!-- Title row -->
+  <text x="40" y="140" fill="#f1f5f9" font-size="24" font-weight="bold">Lote LOTE-A</text>
+  <rect x="740" y="120" width="130" height="28" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+  <text x="750" y="139" fill="#94a3b8" font-size="11">Producto: <tspan fill="#e2e8f0" font-weight="bold">Martillo</tspan></text>
+
+  <!-- Info cards row -->
+  <rect x="40" y="164" width="195" height="80" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+  <text x="56" y="190" fill="#64748b" font-size="11">Cantidad Inicial</text>
+  <text x="56" y="220" fill="#f1f5f9" font-size="18" font-weight="bold">100 piezas</text>
+
+  <rect x="248" y="164" width="195" height="80" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+  <text x="264" y="190" fill="#64748b" font-size="11">Movimiento Neto</text>
+  <text x="264" y="220" fill="#4ade80" font-size="18" font-weight="bold">+50 piezas</text>
+
+  <rect x="456" y="164" width="195" height="80" rx="12" fill="#0ea5e9" fill-opacity="0.1" stroke="#0ea5e9" stroke-opacity="0.2" stroke-width="1"/>
+  <text x="472" y="190" fill="#7dd3fc" font-size="11">Cantidad Disponible</text>
+  <text x="472" y="220" fill="#7dd3fc" font-size="24" font-weight="bold">150 piezas</text>
+
+  <rect x="664" y="164" width="206" height="80" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+  <text x="680" y="190" fill="#64748b" font-size="11">Vencimiento</text>
+  <text x="680" y="220" fill="#f1f5f9" font-size="18" font-weight="bold">31/12/2026</text>
+
+  <!-- Section -->
+  <rect x="40" y="268" width="820" height="340" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Section header -->
+  <text x="56" y="296" fill="#f1f5f9" font-size="16" font-weight="bold">Movimientos de Stock (3)</text>
+  <rect x="720" y="280" width="124" height="28" rx="8" fill="#0284c7"/>
+  <text x="732" y="300" fill="#ffffff" font-size="11" font-weight="bold">+ Nuevo Movimiento</text>
+
+  <!-- Table header -->
+  <line x1="40" y1="320" x2="860" y2="320" stroke="#1e293b" stroke-width="1"/>
+  <text x="56" y="340" fill="#64748b" font-size="10" font-weight="bold" letter-spacing="2">TIPO</text>
+  <text x="180" y="340" fill="#64748b" font-size="10" font-weight="bold" letter-spacing="2">CANTIDAD</text>
+  <text x="320" y="340" fill="#64748b" font-size="10" font-weight="bold" letter-spacing="2">RAZ&Oacute;N</text>
+  <text x="520" y="340" fill="#64748b" font-size="10" font-weight="bold" letter-spacing="2">FECHA</text>
+  <text x="700" y="340" fill="#64748b" font-size="10" font-weight="bold" letter-spacing="2">ACCIONES</text>
+
+  <line x1="40" y1="348" x2="860" y2="348" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Movement 1: Ingreso -->
+  <rect x="56" y="364" width="80" height="24" rx="12" fill="#166534" fill-opacity="0.3"/>
+  <text x="66" y="381" fill="#4ade80" font-size="11" font-weight="bold">+ Ingreso</text>
+  <text x="180" y="381" fill="#e2e8f0" font-size="13" font-weight="bold">50 piezas</text>
+  <text x="320" y="381" fill="#94a3b8" font-size="13">Reposici&oacute;n de inventario</text>
+  <text x="520" y="381" fill="#64748b" font-size="12">01/06/2026 10:30</text>
+  <rect x="740" y="364" width="56" height="24" rx="6" fill="#7f1d1d" fill-opacity="0.4"/>
+  <text x="750" y="381" fill="#fca5a5" font-size="10">Eliminar</text>
+
+  <line x1="56" y1="404" x2="844" y2="404" stroke="#1e293b" stroke-width="0.5"/>
+
+  <!-- Movement 2: Egreso -->
+  <rect x="56" y="412" width="80" height="24" rx="12" fill="#7f1d1d" fill-opacity="0.4"/>
+  <text x="66" y="429" fill="#fca5a5" font-size="11" font-weight="bold">- Egreso</text>
+  <text x="180" y="429" fill="#e2e8f0" font-size="13" font-weight="bold">20 piezas</text>
+  <text x="320" y="429" fill="#94a3b8" font-size="13">Venta al cliente</text>
+  <text x="520" y="429" fill="#64748b" font-size="12">01/06/2026 11:15</text>
+
+  <line x1="56" y1="452" x2="844" y2="452" stroke="#1e293b" stroke-width="0.5"/>
+
+  <!-- Movement 3: Ingreso -->
+  <rect x="56" y="460" width="80" height="24" rx="12" fill="#166534" fill-opacity="0.3"/>
+  <text x="66" y="477" fill="#4ade80" font-size="11" font-weight="bold">+ Ingreso</text>
+  <text x="180" y="477" fill="#e2e8f0" font-size="13" font-weight="bold">20 piezas</text>
+  <text x="320" y="477" fill="#94a3b8" font-size="13">Devoluci&oacute;n</text>
+  <text x="520" y="477" fill="#64748b" font-size="12">02/06/2026 09:00</text>
+
+  <!-- Empty state note -->
+  <rect x="56" y="520" width="788" height="1" fill="none"/>
+  
+  <!-- Footer summary -->
+  <rect x="40" y="576" width="820" height="32" rx="0" fill="#0f172a"/>
+  <text x="56" y="596" fill="#64748b" font-size="11">Stock disponible: <tspan fill="#7dd3fc" font-weight="bold">150 piezas</tspan> | Total movimientos: 3</text>
+
+  <!-- Modal overlay (Nuevo Movimiento) -->
+  <rect x="240" y="140" width="420" height="380" rx="16" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+  <rect x="240" y="140" width="420" height="380" rx="16" fill="#020617" fill-opacity="0.5"/>
+
+  <!-- Modal content -->
+  <rect x="260" y="160" width="380" height="340" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+  <text x="276" y="188" fill="#7dd3fc" font-size="10" font-weight="bold" letter-spacing="3">MOVIMIENTO</text>
+  <text x="276" y="214" fill="#f1f5f9" font-size="18" font-weight="bold">Registrar Movimiento</text>
+  <text x="276" y="232" fill="#64748b" font-size="11">Lote LOTE-A</text>
+
+  <!-- Form fields -->
+  <text x="276" y="262" fill="#94a3b8" font-size="11">Tipo de Movimiento</text>
+  <rect x="276" y="270" width="160" height="36" rx="8" fill="#020617" stroke="#334155" stroke-width="1"/>
+  <text x="290" y="294" fill="#e2e8f0" font-size="12">Egreso (Salida)</text>
+
+  <text x="452" y="262" fill="#94a3b8" font-size="11">Cantidad</text>
+  <rect x="452" y="270" width="120" height="36" rx="8" fill="#020617" stroke="#334155" stroke-width="1"/>
+  <text x="466" y="294" fill="#e2e8f0" font-size="12">10</text>
+
+  <text x="276" y="326" fill="#94a3b8" font-size="11">Raz&oacute;n (opcional)</text>
+  <rect x="276" y="334" width="348" height="36" rx="8" fill="#020617" stroke="#334155" stroke-width="1"/>
+  <text x="290" y="358" fill="#475569" font-size="12">Ej: Devoluci&oacute;n, Uso, Merma, etc.</text>
+
+  <!-- Stock info -->
+  <rect x="276" y="386" width="348" height="36" rx="10" fill="#0ea5e9" fill-opacity="0.1"/>
+  <text x="290" y="410" fill="#7dd3fc" font-size="12">Stock disponible: <tspan fill="#ffffff" font-weight="bold">150</tspan></text>
+
+  <!-- Buttons -->
+  <rect x="276" y="438" width="160" height="36" rx="8" fill="#0284c7"/>
+  <text x="320" y="462" fill="#ffffff" font-size="12" font-weight="bold">Registrar Movimiento</text>
+  <rect x="448" y="438" width="100" height="36" rx="8" fill="none" stroke="#334155" stroke-width="1"/>
+  <text x="482" y="462" fill="#94a3b8" font-size="12">Cancelar</text>
+
+  <!-- Label -->
+  <text x="40" y="640" fill="#1e293b" font-size="9" font-weight="bold" letter-spacing="2">ALTA FIDELIDAD 2</text>
+  <text x="156" y="640" fill="#334155" font-size="9">Detalle de lote con movimientos y formulario modal (REQ-F03, REQ-F04)</text>
+</svg>

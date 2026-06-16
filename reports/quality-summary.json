@@ -1,0 +1,57 @@
+{
+  "project": "Sistema de Gestión de Inventario",
+  "generatedAt": "2026-06-01T23:11:22.512Z",
+  "thresholds": {
+    "minimumCoverage": 60,
+    "maxCyclomaticComplexity": 10,
+    "minimumMaintainabilityIndex": 70,
+    "criticalLintErrors": 0,
+    "openCriticalDefects": 0
+  },
+  "results": {
+    "eslint": {
+      "installed": true,
+      "status": "Aprobado",
+      "criticalErrors": 0,
+      "evidence": "reports/eslint-report.json"
+    },
+    "prettier": {
+      "installed": true,
+      "status": "Aprobado",
+      "details": "> gestor-inventario@1.0.0 format:check\n> prettier --check \"src/**/*.{ts,tsx,css}\" \"scripts/**/*.{js,mjs}\" \"*.{json,md,js,ts}\"\n\nChecking formatting...\nAll matched files use Prettier code style!",
+      "evidence": "reports/format-output.txt"
+    },
+    "coverage": {
+      "status": "Aprobado",
+      "statements": 95.53,
+      "branches": 90.07,
+      "functions": 90.37,
+      "lines": 95.86,
+      "evidence": "coverage/coverage-summary.json"
+    },
+    "complexity": {
+      "status": "Aprobado",
+      "max": 10,
+      "file": "/home/sierraecho/Descargas/proyectoSoftware2/.metrics-tmp-cjs/components/ProductForm.js",
+      "function": "ProductForm",
+      "evidence": "reports/complexity-summary.json"
+    },
+    "maintainabilityIndex": {
+      "status": "Aprobado",
+      "average": 110.6,
+      "evidence": "reports/complexity-summary.json"
+    },
+    "openCriticalDefects": {
+      "status": "Manual",
+      "count": null,
+      "evidence": "gh no disponible; verificación manual requerida"
+    }
+  },
+  "overallAssessment": {
+    "criteriaFullyVerified": false,
+    "notes": [
+      "Los umbrales automáticos de cobertura, complejidad, mantenibilidad y ESLint se cumplen.",
+      "La verificación de defectos críticos abiertos al cierre queda pendiente de revisión manual."
+    ]
+  }
+}

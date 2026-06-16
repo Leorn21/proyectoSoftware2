@@ -1,0 +1,73 @@
+﻿PROPUESTA DE PROYECTO 
+═════════════════════════════════════════════════════════ 
+Grupo: ________________________________________  
+Integrantes: Leonel Ruiz Notari, Matías Harón, Ezequiel Signorini 
+ 
+1. NOMBRE DEL PROYECTO: Sistema de Gestión de Inventario 
+ 
+2. PROBLEMA QUE RESUELVE (3-5 líneas): 
+
+El proyecto busca resolver la falta de control simple y ordenado sobre el stock de productos 
+y sus lotes. En muchos casos, el inventario se gestiona de forma manual o en planillas, lo 
+que puede generar errores en las cantidades disponibles, pérdida de trazabilidad y dificultad 
+para identificar de qué lote proviene cada producto. El sistema permitirá registrar productos, 
+administrar lotes asociados y consultar el stock disponible de manera clara. 
+ 
+3. USUARIOS / PÚBLICO OBJETIVO: Ferreterías y empresas de manufactura. 
+ 
+4. ALCANCE FUNCIONAL — al menos 5 requerimientos:    
+
+REQ-F01: El sistema debe permitir registrar, editar, consultar y eliminar productos, 
+indicando datos básicos como código, nombre, descripción, categoría y unidad de medida. 
+
+REQ-F02: El sistema debe permitir registrar lotes asociados a un producto, indicando 
+número de lote, cantidad inicial, cantidad disponible, fecha de ingreso y fecha de 
+vencimiento, cuando corresponda. 
+
+REQ-F03: El sistema debe permitir registrar movimientos de stock sobre un lote, 
+diferenciando ingresos y egresos, actualizando automáticamente la cantidad disponible del 
+lote. 
+
+REQ-F04: El sistema debe validar que no se puedan registrar egresos mayores a la 
+cantidad disponible del lote seleccionado. 
+
+REQ-F05: El sistema debe permitir consultar el inventario mediante un listado de productos, 
+mostrando el stock total disponible por producto y el detalle de los lotes asociados. 
+ 
+5. ALCANCE NO FUNCIONAL — al menos 2 requerimientos:    
+
+REQ-NF01: El sistema debe ser simple de ejecutar y probar localmente, incluyendo un 
+README con instrucciones claras de instalación, configuración, ejecución y pruebas. 
+
+REQ-NF02: El sistema debe mantener una estructura de código clara, modular y trazable, 
+incorporando referencias a los requerimientos funcionales en el código y en los tests. 
+
+ 
+6. STACK TECNOLÓGICO:    
+
+●​ Lenguaje: Typescript 
+
+●​ Framework: React 
+
+
+
+●​ Base de datos: Postgres   
+
+●​ Otras herramientas: Railway 
+ 
+7. REPOSITORIO (URL pública en GitHub/GitLab): 
+https://github.com/Leorn21/proyectoSoftware2 
+ 
+8. RIESGOS PRINCIPALES Y CÓMO LOS MITIGARÁN (2-3 ítems):    
+
+●​ Riesgo: Definir un alcance demasiado grande para el tiempo disponible. 
+
+○​ Mitigación: Limitar el sistema a productos, lotes y movimientos básicos de 
+stock, evitando complicaciones como gestión de fallas y eventos asociados a 
+la gestión de lotes. 
+
+●​ Riesgo: Que la lógica de stock tenga errores al registrar ingresos y egresos. 
+
+○​ Mitigación: Implementar validaciones claras y casos de prueba específicos 
+para movimientos de stock, stock insuficiente y actualización de cantidades 
+disponibles.

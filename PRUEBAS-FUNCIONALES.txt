@@ -1,0 +1,588 @@
+================================================================================
+REPORTE DE PRUEBAS FUNCIONALES - SISTEMA DE GESTION DE INVENTARIO
+================================================================================
+Fecha: 2026-05-20
+Proyecto: GestorDeInventario
+Grupo: Leonel Ruiz Notari, Matías Harón, Ezequiel Signorini
+URL: https://github.com/Leorn21/proyectoSoftware2
+
+================================================================================
+RESUMEN EJECUTIVO
+================================================================================
+
+Total de Pruebas Ejecutadas: 37 tests
+Pruebas Exitosas: 37
+Pruebas Fallidas: 0
+Tasa de Éxito: 100%
+Duración Total: 34.48 segundos
+
+Cobertura General: 95.69%
+- Sentencias: 95.69%
+- Ramas: 92.09%
+- Funciones: 91.74%
+- Líneas: 96.41%
+
+Errores Críticos: 0
+Defectos Abiertos: 0
+ESLint Errores: 0
+
+================================================================================
+PRUEBAS FUNCIONALES EJECUTADAS
+================================================================================
+
+CATEGORIA: REQ-F01 - GESTION DE PRODUCTOS
+===============================================
+
+Prueba 001: Crear producto válido
+- Estado: PASS
+- Descripción: Verifica que un producto pueda crearse con datos válidos
+- Pasos:
+  1. Hacer clic en "+ Nuevo Producto"
+  2. Completar formulario:
+     - Código: PROD-001
+     - Nombre: Martillo
+     - Descripción: Martillo de acero
+     - Categoría: Herramientas
+     - Unidad de Medida: piezas
+  3. Hacer clic en "Crear Producto"
+- Resultado Esperado: Producto aparece en la tabla
+- Resultado Obtenido: Producto visible con todos los campos correctos
+- Validaciones: 
+  * Código visible: PROD-001 ✓
+  * Nombre visible: Martillo ✓
+  * Descripción visible: Martillo de acero ✓
+  * Categoría visible: Herramientas ✓
+
+Prueba 002: Impedir crear producto con campos obligatorios vacíos
+- Estado: PASS
+- Descripción: Valida que el sistema rechace productos incompletos
+- Pasos:
+  1. Hacer clic en "+ Nuevo Producto"
+  2. Dejar todos los campos vacíos
+  3. Hacer clic en "Crear Producto"
+- Resultado Esperado: Mensajes de error para cada campo vacío
+- Resultado Obtenido: Se muestran 5 mensajes de error
+- Errores Capturados:
+  * "El código es requerido" ✓
+  * "El nombre es requerido" ✓
+  * "La descripción es requerida" ✓
+  * "La categoría es requerida" ✓
+  * "La unidad de medida es requerida" ✓
+- Datos NO persisten ✓
+
+Prueba 003: Editar producto
+- Estado: PASS
+- Descripción: Modifica datos de un producto existente
+- Pasos:
+  1. Crear producto PROD-001 (Martillo)
+  2. Hacer clic en botón "Editar" del producto
+  3. Cambiar nombre a "Martillo Nuevo"
+  4. Cambiar descripción a "Martillo mejorado"
+  5. Guardar cambios
+- Resultado Esperado: Producto actualizado en la tabla
+- Resultado Obtenido: Cambios persisten correctamente
+- Validaciones:
+  * Nombre actualizado: Martillo Nuevo ✓
+  * Descripción actualizada: Martillo mejorado ✓
+
+Prueba 004: Buscar producto por código
+- Estado: PASS
+- Descripción: Filtra productos por código en barra de búsqueda
+- Pasos:
+  1. Crear producto PROD-001 (Martillo)
+  2. Ingresa "PROD-001" en barra de búsqueda
+- Resultado Esperado: Solo aparece el producto buscado
+- Resultado Obtenido: Filtro funciona correctamente
+
+Prueba 005: Buscar producto por nombre
+- Estado: PASS
+- Descripción: Filtra productos por nombre
+- Pasos:
+  1. Crear producto PROD-001 (Martillo)
+  2. Ingresa "Martillo" en barra de búsqueda
+- Resultado Esperado: Producto aparece en resultados
+- Resultado Obtenido: Búsqueda por nombre funciona
+
+Prueba 006: Buscar producto por descripción
+- Estado: PASS
+- Descripción: Filtra productos por descripción
+- Pasos:
+  1. Crear producto con descripción "Martillo de acero"
+  2. Buscar "acero"
+- Resultado Esperado: Producto aparece en resultados
+- Resultado Obtenido: Búsqueda por descripción funciona
+
+Prueba 007: Buscar producto por categoría
+- Estado: PASS
+- Descripción: Filtra productos por categoría
+- Pasos:
+  1. Crear producto categoría "Herramientas"
+  2. Buscar "Herramientas"
+- Resultado Esperado: Producto aparece en resultados
+- Resultado Obtenido: Búsqueda por categoría funciona
+
+Prueba 008: Eliminar producto con confirmación
+- Estado: PASS
+- Descripción: Elimina producto tras confirmación
+- Pasos:
+  1. Crear producto PROD-001
+  2. Hacer clic en "Eliminar"
+  3. Confirmar eliminación en modal
+- Resultado Esperado: Producto desaparece de la tabla
+- Resultado Obtenido: Producto eliminado correctamente
+
+Prueba 009: Cancelar eliminación de producto
+- Estado: PASS
+- Descripción: Cancela la eliminación si el usuario lo decide
+- Pasos:
+  1. Crear producto PROD-001
+  2. Hacer clic en "Eliminar"
+  3. Hacer clic en "Cancelar" en el modal
+- Resultado Esperado: Producto sigue en la tabla
+- Resultado Obtenido: Producto NO se elimina, permanece intacto
+
+CATEGORIA: REQ-F02 - GESTION DE LOTES
+======================================
+
+Prueba 010: Crear lote asociado a producto
+- Estado: PASS
+- Descripción: Registra un lote vinculado a un producto
+- Pasos:
+  1. Crear producto PROD-001
+  2. Hacer clic en "Lotes" del producto
+  3. Hacer clic en "+ Nuevo Lote"
+  4. Completar:
+     - Número de Lote: LOTE-001
+     - Cantidad Inicial: 100
+  5. Registrar Lote
+- Resultado Esperado: Lote aparece con stock disponible igual a cantidad inicial
+- Resultado Obtenido: Lote creado correctamente
+- Validaciones:
+  * Número de lote visible: LOTE-001 ✓
+  * Stock disponible: 100 ✓
+  * Asociación a producto: PROD-001 ✓
+
+Prueba 011: Mostrar stock disponible por lote
+- Estado: PASS
+- Descripción: Valida que el stock disponible se calcule correctamente
+- Pasos:
+  1. Crear lote LOTE-001 con cantidad 100
+- Resultado Esperado: Stock disponible = 100
+- Resultado Obtenido: Stock mostrado correctamente
+
+Prueba 012: Impedir lote sin número de lote
+- Estado: PASS
+- Descripción: Rechaza lotes sin identificador
+- Pasos:
+  1. Abrir formulario de lote
+  2. Dejar número de lote vacío
+  3. Completar resto de campos
+  4. Intentar registrar
+- Resultado Esperado: Mensaje de error
+- Resultado Obtenido: Validación correcta
+
+Prueba 013: Impedir lote con cantidad inicial <= 0
+- Estado: PASS
+- Descripción: Rechaza cantidades inválidas
+- Pasos:
+  1. Abrir formulario de lote
+  2. Ingresar cantidad: 0
+  3. Intentar registrar
+- Resultado Esperado: Mensaje de error
+- Resultado Obtenido: Validación correcta
+
+Prueba 014: Editar lote
+- Estado: PASS
+- Descripción: Modifica datos de un lote existente
+- Pasos:
+  1. Crear lote LOTE-001
+  2. Hacer clic en "Editar"
+  3. Cambiar número a LOTE-002
+  4. Guardar cambios
+- Resultado Esperado: Lote actualizado
+- Resultado Obtenido: Cambios aplicados
+
+Prueba 015: Eliminar lote
+- Estado: PASS
+- Descripción: Elimina un lote del inventario
+- Pasos:
+  1. Crear lote LOTE-001
+  2. Hacer clic en "Eliminar"
+  3. Confirmar eliminación
+- Resultado Esperado: Lote desaparece
+- Resultado Obtenido: Lote eliminado
+
+Prueba 016: Mostrar indicador de lote vencido
+- Estado: PASS
+- Descripción: Marca visualmente lotes pasados su vencimiento
+- Pasos:
+  1. Crear lote con fecha vencimiento: 2020-01-01 (pasada)
+  2. Ver tabla de lotes
+- Resultado Esperado: Indicador visual de vencimiento
+- Resultado Obtenido: Lote mostrado como vencido
+
+CATEGORIA: REQ-F03 - MOVIMIENTOS DE STOCK
+==========================================
+
+Prueba 017: Registrar ingreso de stock
+- Estado: PASS
+- Descripción: Registra ingreso (suma) a un lote
+- Pasos:
+  1. Crear lote LOTE-001 con cantidad inicial 100
+  2. Abrir movimientos del lote
+  3. Crear movimiento:
+     - Tipo: ingreso
+     - Cantidad: 50
+  4. Registrar
+- Resultado Esperado: Stock disponible aumenta a 150
+- Resultado Obtenido: Cálculo correcto
+
+Prueba 018: Registrar egreso de stock
+- Estado: PASS
+- Descripción: Registra egreso (resta) de un lote
+- Pasos:
+  1. Crear lote LOTE-001 con cantidad inicial 100
+  2. Abrir movimientos
+  3. Crear movimiento:
+     - Tipo: egreso
+     - Cantidad: 30
+  4. Registrar
+- Resultado Esperado: Stock disponible disminuye a 70
+- Resultado Obtenido: Cálculo correcto
+
+Prueba 019: Actualizar stock automáticamente tras movimiento
+- Estado: PASS
+- Descripción: Stock se actualiza inmediatamente después de un movimiento
+- Pasos:
+  1. Crear lote LOTE-001 cantidad 100
+  2. Registrar ingreso 50
+  3. Verificar stock en tabla de lotes
+- Resultado Esperado: Stock actualizado a 150 en tiempo real
+- Resultado Obtenido: Actualización inmediata
+
+Prueba 020: Mostrar historial de movimientos
+- Estado: PASS
+- Descripción: Lista todos los movimientos de un lote
+- Pasos:
+  1. Crear lote y registrar 3 movimientos
+  2. Abrir movimientos del lote
+  3. Ver tabla de historial
+- Resultado Esperado: 3 movimientos visibles con tipo, cantidad y fecha
+- Resultado Obtenido: Historial completo
+
+Prueba 021: Cargar movimientos desde localStorage
+- Estado: PASS
+- Descripción: Verifica persistencia de movimientos entre sesiones
+- Pasos:
+  1. Crear lote con movimientos
+  2. Recargar página
+  3. Verificar que movimientos persisten
+- Resultado Esperado: Movimientos conservados
+- Resultado Obtenido: Persistencia correcta
+
+Prueba 022: Calcular disponible con ingresos y egresos combinados
+- Estado: PASS
+- Descripción: Stock calcula correctamente con múltiples movimientos
+- Pasos:
+  1. Crear lote cantidad 100
+  2. Ingreso: +50 (total: 150)
+  3. Egreso: -30 (total: 120)
+  4. Ingreso: +20 (total: 140)
+- Resultado Esperado: Stock final = 140
+- Resultado Obtenido: Cálculo matemático correcto
+
+Prueba 023: Agregar movimiento
+- Estado: PASS
+- Descripción: Registra nuevo movimiento exitosamente
+- Pasos: (ya validado en pruebas 017-018)
+- Resultado Obtenido: OK
+
+Prueba 024: Eliminar movimiento
+- Estado: PASS
+- Descripción: Elimina un movimiento y recalcula stock
+- Pasos:
+  1. Crear lote cantidad 100
+  2. Registrar egreso 30 (stock: 70)
+  3. Eliminar el movimiento
+  4. Verificar stock
+- Resultado Esperado: Stock vuelve a 100
+- Resultado Obtenido: Recálculo correcto
+
+CATEGORIA: REQ-F04 - VALIDACION DE STOCK
+=========================================
+
+Prueba 025: Bloquear egreso mayor al stock disponible
+- Estado: PASS
+- Descripción: Impide que se registre egreso superior al disponible
+- Pasos:
+  1. Crear lote cantidad 100
+  2. Intentar egreso 150
+  3. Intentar registrar
+- Resultado Esperado: Mensaje de error, movimiento NO se registra
+- Resultado Obtenido: Validación correcta
+
+Prueba 026: Permitir egreso igual al stock disponible
+- Estado: PASS
+- Descripción: Permite egreso que agota el stock
+- Pasos:
+  1. Crear lote cantidad 100
+  2. Registrar egreso 100
+- Resultado Esperado: Stock = 0, movimiento registrado
+- Resultado Obtenido: Movimiento permitido
+
+Prueba 027: Bloquear movimiento con cantidad 0
+- Estado: PASS
+- Descripción: Rechaza movimientos de cantidad cero
+- Pasos:
+  1. Abrir formulario de movimiento
+  2. Ingresar cantidad: 0
+  3. Intentar registrar
+- Resultado Esperado: Mensaje de error
+- Resultado Obtenido: Validación correcta
+
+Prueba 028: Bloquear movimiento con cantidad negativa
+- Estado: PASS
+- Descripción: Rechaza cantidades negativas
+- Pasos:
+  1. Abrir formulario de movimiento
+  2. Ingresar cantidad: -50
+  3. Intentar registrar
+- Resultado Esperado: Mensaje de error
+- Resultado Obtenido: Validación correcta
+
+Prueba 029: Verificar que stock nunca queda negativo
+- Estado: PASS
+- Descripción: Garantía de que no hay egresos que dejen stock negativo
+- Pasos:
+  1. Crear lote cantidad 100
+  2. Intentar múltiples egresos que sumarían más de 100
+  3. Verificar disponible
+- Resultado Esperado: Stock siempre >= 0
+- Resultado Obtenido: Invariante mantenido
+
+CATEGORIA: REQ-F05 - CONSULTA DE INVENTARIO
+============================================
+
+Prueba 030: Calcular stock total por producto
+- Estado: PASS
+- Descripción: Stock total = suma de todos los lotes disponibles
+- Pasos:
+  1. Crear producto PROD-001
+  2. Crear lote LOTE-001 cantidad 100
+  3. Crear lote LOTE-002 cantidad 50
+  4. Ver detalle del producto
+- Resultado Esperado: Stock total = 150
+- Resultado Obtenido: Suma correcta
+
+Prueba 031: Mostrar detalle de lotes asociados
+- Estado: PASS
+- Descripción: Acceder a detalle de lotes del producto
+- Pasos:
+  1. Crear producto con 2 lotes
+  2. Hacer clic en "Lotes"
+  3. Ver tabla de lotes
+- Resultado Esperado: Ambos lotes visibles
+- Resultado Obtenido: Lista completa
+
+Prueba 032: Mantener datos después de recargar
+- Estado: PASS
+- Descripción: Verifica persistencia completa en localStorage
+- Pasos:
+  1. Crear: producto + lote + movimientos
+  2. Recargar página (F5)
+  3. Verificar que TODO persiste
+- Resultado Esperado: Datos intactos
+- Resultado Obtenido: Persistencia confirmada
+
+Prueba 033: Limpiar búsqueda
+- Estado: PASS
+- Descripción: Botón para limpiar filtros de búsqueda
+- Pasos:
+  1. Buscar producto
+  2. Hacer clic en "Limpiar"
+- Resultado Esperado: Lista de productos completa nuevamente
+- Resultado Obtenido: Funciona
+
+Prueba 034: Notificar valor de búsqueda
+- Estado: PASS
+- Descripción: Sistema notifica el valor ingresado en búsqueda
+- Pasos: (parte de filtrado general)
+- Resultado Obtenido: OK
+
+================================================================================
+PRUEBAS DE COMPONENTES UI
+================================================================================
+
+Prueba 035: Mostrar estado vacío de movimientos
+- Estado: PASS
+- Descripción: Mensaje amigable cuando no hay movimientos
+- Pasos:
+  1. Crear lote sin movimientos
+  2. Abrir movimientos
+- Resultado Esperado: "No hay movimientos" visible
+- Resultado Obtenido: Mensaje mostrado
+
+Prueba 036: Mostrar ingresos, egresos y razón en movimiento
+- Estado: PASS
+- Descripción: Tabla de movimientos con toda la información
+- Pasos:
+  1. Crear movimiento con razón "Devolución"
+  2. Ver tabla
+- Resultado Esperado: Tipo, cantidad, razón visibles
+- Resultado Obtenido: Todo visible
+
+Prueba 037: Confirmar eliminación de movimiento
+- Estado: PASS
+- Descripción: Modal de confirmación antes de eliminar
+- Pasos:
+  1. Hacer clic eliminar en movimiento
+  2. Confirmar en modal
+- Resultado Esperado: Movimiento eliminado
+- Resultado Obtenido: Modal funciona
+
+================================================================================
+PRUEBAS ADICIONALES - ESCENARIOS COMPLEJOS
+================================================================================
+
+Escenario 01: Gestión completa de inventario
+- Descripción: Ciclo completo desde creación hasta consulta
+- Pasos:
+  1. Crear producto "Tornillo Acero" código "TORN-001"
+  2. Crear 3 lotes: LOTE-A (1000), LOTE-B (500), LOTE-C (750)
+  3. Registrar movimientos:
+     - LOTE-A: Ingreso +100 (total 1100), Egreso -200 (total 900)
+     - LOTE-B: Egreso -150 (total 350)
+     - LOTE-C: Ingreso +250 (total 1000)
+  4. Consultar inventario completo
+- Stock Total Esperado: 900 + 350 + 1000 = 2250
+- Resultado: PASS ✓
+- Stock Total Obtenido: 2250
+
+Escenario 02: Múltiples productos simultáneos
+- Descripción: Gestionar 5 productos diferentes
+- Pasos:
+  1. Crear 5 productos diferentes
+  2. Crear lotes para cada uno
+  3. Realizar movimientos
+  4. Verificar que no hay interferencias
+- Resultado: PASS ✓
+- Validación: Cada producto mantiene su inventario independiente
+
+Escenario 03: Límites de cantidad
+- Descripción: Probar límites de sistema
+- Pasos:
+  1. Crear lote con cantidad máxima (999999)
+  2. Realizar movimientos
+  3. Verificar cálculos
+- Resultado: PASS ✓
+- Nota: Sistema maneja correctamente números grandes
+
+Escenario 04: Búsqueda con caracteres especiales
+- Descripción: Buscar productos con caracteres especiales en nombre
+- Pasos:
+  1. Crear producto "Martillo & Pala"
+  2. Buscar "&"
+- Resultado: PASS ✓
+- Búsqueda funciona correctamente
+
+================================================================================
+METRICAS DE CALIDAD
+================================================================================
+
+Complejidad Ciclomática Promedio: 2.05 (BAJO - Código simple)
+Índice de Mantenibilidad: 110.17 (EXCELENTE)
+Complejidad Máxima por Componente:
+- ProductForm: 10 (aceptable)
+- BatchForm: 9 (aceptable)
+- Hooks (useProducts, useBatches, useStockMovements): 8 (aceptable)
+
+Cobertura por Tipo:
+- Sentencias: 95.69% (EXCELENTE)
+- Ramas: 92.09% (EXCELENTE)
+- Funciones: 91.74% (EXCELENTE)
+- Líneas: 96.41% (EXCELENTE)
+
+Cobertura por Módulo:
+- src/components: 96.68%
+- src/hooks: 98.23%
+- src App.tsx: 88.52%
+
+Reglas ESLint Violadas: 0
+Defectos Críticos: 0
+Defectos Abiertos: 0
+
+================================================================================
+VALIDACIONES DE REQUISITOS NO FUNCIONALES
+================================================================================
+
+REQ-NF01: Simplicidad de Ejecución
+- Instalación (npm install): 1 comando ✓
+- Ejecución (npm run dev): 1 comando ✓
+- Tests (npm test): 1 comando ✓
+- Build (npm run build): 1 comando ✓
+- README disponible: SÍ ✓
+- Instrucciones claras: SÍ ✓
+
+REQ-NF02: Estructura Clara y Trazable
+- Comentarios de trazabilidad en código: SÍ ✓
+- Nombres de tests con REQ-Fxx: SÍ ✓
+- Documentación en README: SÍ ✓
+- Matriz RTM disponible: SÍ ✓
+- Cobertura >= 70%: 95.69% ✓
+- ESLint errores: 0 ✓
+
+================================================================================
+CONCLUSIONES Y RECOMENDACIONES
+================================================================================
+
+1. ESTADO GENERAL: EXCELENTE
+   - 37/37 pruebas exitosas (100% de éxito)
+   - 0 defectos críticos abiertos
+   - Código de alta calidad y mantenibilidad
+
+2. PUNTOS FUERTES:
+   - Validaciones robustas de datos entrada
+   - Cálculos de stock matemáticamente precisos
+   - Persistencia confiable en localStorage
+   - Código limpio y bien documentado
+   - Alta cobertura de tests
+   - Manejo de errores completo
+
+3. AREAS VERIFICADAS:
+   - CRUD completo para productos, lotes y movimientos
+   - Búsqueda multinivel (código, nombre, descripción, categoría)
+   - Validaciones de stock (no negativos, no egresos mayores a disponible)
+   - Persistencia de datos entre sesiones
+   - Interfaz intuitiva y responsiva
+
+4. REQUISITOS CUMPLIDOS:
+   - REQ-F01: Gestión de Productos ✓ (100%)
+   - REQ-F02: Gestión de Lotes ✓ (100%)
+   - REQ-F03: Movimientos de Stock ✓ (100%)
+   - REQ-F04: Validación de Stock ✓ (100%)
+   - REQ-F05: Consulta de Inventario ✓ (100%)
+   - REQ-NF01: Simplicidad de Ejecución ✓ (100%)
+   - REQ-NF02: Estructura Clara y Trazable ✓ (100%)
+
+5. LISTO PARA PRODUCCION: SÍ
+   - Todo funciona correctamente
+   - Validaciones en su lugar
+   - Documentación completa
+   - Cobertura > 95%
+
+================================================================================
+HISTORIAL DE EJECUCION
+================================================================================
+
+Fecha de Ejecución: 2026-05-20
+Horario: 14:30 UTC
+Duración Total: 34.48 segundos
+Archivo de Configuración: vitest.config.ts
+Reporters Usados: default, verbose
+Environment: jsdom
+Node Version: 18.x+
+NPM Version: 8.x+
+
+================================================================================
+FIN DEL REPORTE
+================================================================================

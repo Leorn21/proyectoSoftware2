@@ -1,0 +1,46 @@
+
+> gestor-inventario@1.0.0 test:coverage
+> vitest run --coverage
+
+8:11:04 PM [vite] warning: `esbuild` option was specified by "vite:react-babel" plugin. This option is deprecated, please use `oxc` instead.
+8:11:04 PM [vite] warning: `optimizeDeps.esbuildOptions` option was specified by "vite:react-babel" plugin. This option is deprecated, please use `optimizeDeps.rolldownOptions` instead.
+Both esbuild and oxc options were set. oxc options will be used and esbuild options will be ignored. The following esbuild options were set: `{ jsx: 'automatic', jsxImportSource: undefined }`
+
+ RUN  v4.1.7 /home/sierraecho/Descargas/proyectoSoftware2
+      Coverage enabled with v8
+
+
+ Test Files  5 passed (5)
+      Tests  43 passed (43)
+   Start at  20:11:04
+   Duration  13.04s (transform 338ms, setup 334ms, import 1.11s, tests 12.79s, environment 3.29s)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   95.53 |    90.07 |   90.37 |   95.86 |                   
+ src               |   87.09 |    80.95 |   68.42 |   87.09 |                   
+  App.tsx          |   87.09 |    80.95 |   68.42 |   87.09 | ...54-155,160,291 
+ src/components    |   95.59 |    91.66 |   92.15 |   96.71 |                   
+  BatchDetail.tsx  |    92.3 |    88.88 |   83.33 |    92.3 | 148               
+  BatchForm.tsx    |    92.3 |       95 |   83.33 |   95.83 | 75                
+  BatchList.tsx    |     100 |    91.66 |     100 |     100 | 103               
+  ...uctDetail.tsx |   96.42 |       80 |      90 |   96.29 | 164               
+  ProductForm.tsx  |   93.33 |    97.56 |   83.33 |   96.42 | 73                
+  ProductList.tsx  |     100 |    83.33 |     100 |     100 | 34                
+  ...ementForm.tsx |   96.29 |    86.66 |     100 |      96 | 46                
+ src/components/ui |   95.58 |      100 |      85 |   95.58 |                   
+  card.tsx         |   93.33 |      100 |      80 |   93.33 | 50                
+  dialog.tsx       |    90.9 |      100 |   66.66 |    90.9 | 54,65             
+ src/hooks         |     100 |     92.5 |     100 |     100 |                   
+  useBatches.ts    |     100 |    85.71 |     100 |     100 | 67-71             
+  ...kMovements.ts |     100 |    93.75 |     100 |     100 | 105               
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 95.53% ( 385/403 )
+Branches     : 90.07% ( 236/262 )
+Functions    : 90.37% ( 122/135 )
+Lines        : 95.86% ( 371/387 )
+================================================================================

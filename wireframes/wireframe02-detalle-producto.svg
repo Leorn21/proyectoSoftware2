@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 640" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="800" height="640" fill="#f8fafc"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="800" height="64" fill="#1e293b"/>
+  <text x="32" y="40" fill="#f1f5f9" font-size="20" font-weight="bold">Sistema de Gesti&oacute;n de Inventario</text>
+
+  <!-- Back button -->
+  <text x="32" y="100" fill="#0ea5e9" font-size="13" font-weight="bold">&larr; Volver</text>
+
+  <!-- Product title row -->
+  <text x="32" y="136" fill="#0f172a" font-size="24" font-weight="bold">Martillo</text>
+  <rect x="680" y="116" width="88" height="28" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="688" y="135" fill="#475569" font-size="11">C&oacute;digo: HER-001</text>
+
+  <!-- Info cards row -->
+  <rect x="32" y="156" width="220" height="72" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="48" y="180" fill="#64748b" font-size="11">Categor&iacute;a</text>
+  <text x="48" y="206" fill="#0f172a" font-size="16" font-weight="bold">Herramientas</text>
+
+  <rect x="268" y="156" width="220" height="72" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="284" y="180" fill="#64748b" font-size="11">Unidad de Medida</text>
+  <text x="284" y="206" fill="#0f172a" font-size="16" font-weight="bold">piezas</text>
+
+  <rect x="504" y="156" width="264" height="72" rx="8" fill="#e0f2fe" stroke="#bae6fd" stroke-width="1"/>
+  <text x="520" y="180" fill="#0284c7" font-size="11">Stock Total Disponible</text>
+  <text x="520" y="206" fill="#0369a1" font-size="22" font-weight="bold">150 piezas</text>
+
+  <!-- Description -->
+  <rect x="32" y="244" width="736" height="56" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="48" y="264" fill="#64748b" font-size="11" font-weight="bold">DESCRIPCI&Oacute;N</text>
+  <text x="48" y="286" fill="#334155" font-size="13">Martillo de acero para construcci&oacute;n pesada.</text>
+
+  <!-- Section title + New batch button -->
+  <text x="32" y="340" fill="#0f172a" font-size="18" font-weight="bold">Lotes (2)</text>
+  <rect x="640" y="324" width="128" height="32" rx="6" fill="#0ea5e9"/>
+  <text x="652" y="345" fill="#ffffff" font-size="12" font-weight="bold">+ Nuevo Lote</text>
+
+  <!-- Batches table header -->
+  <rect x="32" y="360" width="736" height="36" rx="6" fill="#e2e8f0"/>
+  <text x="48" y="384" fill="#475569" font-size="11" font-weight="bold">N&Uacute;MERO DE LOTE</text>
+  <text x="208" y="384" fill="#475569" font-size="11" font-weight="bold">INICIAL</text>
+  <text x="304" y="384" fill="#475569" font-size="11" font-weight="bold">DISPONIBLE</text>
+  <text x="416" y="384" fill="#475569" font-size="11" font-weight="bold">INGRESO</text>
+  <text x="528" y="384" fill="#475569" font-size="11" font-weight="bold">VENCIMIENTO</text>
+  <text x="640" y="384" fill="#475569" font-size="11" font-weight="bold">ACCIONES</text>
+
+  <!-- Batch row 1 -->
+  <line x1="32" y1="396" x2="768" y2="396" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="48" y="420" fill="#0f172a" font-size="13" font-weight="bold">LOTE-A</text>
+  <text x="208" y="420" fill="#334155" font-size="13">100</text>
+  <rect x="304" y="408" width="80" height="24" rx="12" fill="#dcfce7"/>
+  <text x="314" y="425" fill="#16a34a" font-size="11" font-weight="bold">100 piezas</text>
+  <text x="416" y="420" fill="#64748b" font-size="12">01/05/2026</text>
+  <text x="528" y="420" fill="#64748b" font-size="12">31/12/2026</text>
+  <rect x="640" y="408" width="56" height="24" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="648" y="425" fill="#475569" font-size="10">Movimientos</text>
+  <rect x="704" y="408" width="40" height="24" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="710" y="425" fill="#475569" font-size="10">Editar</text>
+
+  <!-- Batch row 2 -->
+  <line x1="32" y1="436" x2="768" y2="436" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="48" y="460" fill="#0f172a" font-size="13" font-weight="bold">LOTE-B</text>
+  <text x="208" y="460" fill="#334155" font-size="13">50</text>
+  <rect x="304" y="448" width="80" height="24" rx="12" fill="#dcfce7"/>
+  <text x="314" y="465" fill="#16a34a" font-size="11" font-weight="bold">50 piezas</text>
+
+  <!-- Label -->
+  <rect x="32" y="500" width="100" height="20" rx="4" fill="#e2e8f0"/>
+  <text x="40" y="514" fill="#64748b" font-size="10" font-weight="bold">WIREFRAME 2</text>
+  <text x="144" y="514" fill="#94a3b8" font-size="10">Detalle de producto y lotes (REQ-F02, REQ-F05)</text>
+</svg>

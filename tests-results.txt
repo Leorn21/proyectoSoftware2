@@ -1,0 +1,88 @@
+STATIC CODE TESTS RESULTS
+=========================
+
+Date: 2026-05-20
+Project: GestorDeInventario
+
+1) ESLint (TypeScript/React)
+Command:
+  npx eslint "src/**/*.{ts,tsx}"
+Result:
+  Exit code: 0
+  Output: (no errors or warnings)
+
+2) Complexity / Maintainability (complexity-report)
+Commands:
+  npx tsc -p tsconfig.json --outDir .metrics-tmp-cjs --target ES5 --module commonjs --moduleResolution node --sourceMap false --noEmit false --allowImportingTsExtensions false
+  npx cr -o escomplex-report.json -f json -e -p ".*\.js$" .metrics-tmp-cjs
+Result:
+  Output file: escomplex-report.json
+  Notes: Report generated from CommonJS JS output (.metrics-tmp-cjs).
+
+Summary (from escomplex-report.json):
+  changeCost: 6.25
+  coreSize: 0
+  loc: 10.36168676900585
+  cyclomatic: 2.0461896929824563
+  effort: 8672.715246430387
+  params: 0.6866913377192982
+  maintainability: 110.17209154665665
+
+Detailed per-file metrics are available in escomplex-report.json.
+
+3) Additional metrics collected from escomplex-report.json
+Max cyclomatic complexity by function:
+  ProductForm (\.metrics-tmp-cjs/components/ProductForm.js): 10
+  BatchForm (\.metrics-tmp-cjs/components/BatchForm.js): 9
+  <anonymous> (\.metrics-tmp-cjs/hooks/useBatches.js): 8
+  <anonymous> (\.metrics-tmp-cjs/hooks/useProducts.js): 8
+  <anonymous> (\.metrics-tmp-cjs/hooks/useStockMovements.js): 8
+  App (\.metrics-tmp-cjs/App.js): 8
+
+Maintainability by module (minimum first):
+  .metrics-tmp-cjs/components/ProductForm.js: 87.03
+  .metrics-tmp-cjs/components/StockMovementList.js: 92.46
+  .metrics-tmp-cjs/components/BatchDetail.js: 92.86
+  .metrics-tmp-cjs/components/StockMovementForm.js: 94.95
+  .metrics-tmp-cjs/components/BatchList.js: 95.13
+  .metrics-tmp-cjs/components/SearchBar.js: 95.97
+  .metrics-tmp-cjs/components/ProductList.js: 96.36
+  .metrics-tmp-cjs/components/BatchForm.js: 97.45
+  .metrics-tmp-cjs/components/ProductDetail.js: 98.37
+  .metrics-tmp-cjs/App.js: 103.53
+  .metrics-tmp-cjs/hooks/useStockMovements.js: 120.91
+  .metrics-tmp-cjs/hooks/useBatches.js: 122.04
+  .metrics-tmp-cjs/hooks/useProducts.js: 123.49
+  .metrics-tmp-cjs/types/index.js: 137.97
+  .metrics-tmp-cjs/main.js: 140.35
+  .metrics-tmp-cjs/components/index.js: 163.89
+
+Test coverage:
+  ------------------------|---------|----------|---------|---------|-------------------------
+  File                    | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s       
+  ------------------------|---------|----------|---------|---------|-------------------------
+  All files               |   95.69 |    92.09 |   91.74 |   96.41 |                         
+  src                    |   88.52 |       85 |   72.22 |   88.33 |                         
+    App.tsx               |   88.52 |       85 |   72.22 |   88.33 | 31,66-67,96,107-108,113 
+  src/components         |   96.68 |    94.21 |   95.74 |   97.93 |                         
+    BatchDetail.tsx       |     100 |      100 |     100 |     100 |                         
+    BatchForm.tsx         |    91.3 |    93.93 |   83.33 |   95.23 | 62                      
+    BatchList.tsx         |     100 |      100 |     100 |     100 |                         
+    ProductDetail.tsx     |     100 |     87.5 |     100 |     100 | 48-61                   
+    ProductForm.tsx       |    93.1 |    97.56 |   83.33 |   96.29 | 66                      
+    ProductList.tsx       |     100 |     87.5 |     100 |     100 | 30                      
+    SearchBar.tsx         |     100 |      100 |     100 |     100 |                         
+    StockMovementForm.tsx |   96.15 |    86.66 |     100 |   95.83 | 43                      
+    StockMovementList.tsx |     100 |      100 |     100 |     100 |                         
+    index.ts              |       0 |        0 |       0 |       0 |                         
+  src/hooks              |   98.23 |       90 |   95.45 |   99.01 |                         
+    useBatches.ts         |     100 |    85.71 |     100 |     100 | 64-68                   
+    useProducts.ts        |   93.54 |       90 |   84.61 |   96.42 | 66                      
+    useStockMovements.ts  |     100 |    93.75 |     100 |     100 | 97                      
+  ------------------------|---------|----------|---------|---------|-------------------------
+
+Critical linter errors:
+  0
+
+Critical defects open at closure:
+  0
